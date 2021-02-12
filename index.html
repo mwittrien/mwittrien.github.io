@@ -12,9 +12,7 @@
 					let tempLink = document.createElement("a");
 					tempLink.href = objectURL;
 					tempLink.download = url.split("/").pop();
-					console.log(objectURL);
-					console.log(tempLink);
-					//tempLink.click();
+					tempLink.click();
 				}
 			};
 			xhttp.onerror = function() {console.log("error");};
