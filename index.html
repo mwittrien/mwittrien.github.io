@@ -7,6 +7,7 @@
 			if (!url) return console.log("no url");
 			let tempLink = document.createElement("a");
 			tempLink.href = url;
+			tempLink.download = url.split("/").pop();
 			tempLink.click();
 			return;
 			let xhttp = new XMLHttpRequest();
