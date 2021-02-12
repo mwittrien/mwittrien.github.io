@@ -2,15 +2,16 @@
 <html>
 	<head>
 		<script>
-			if (!window.location.search) return;
+			if (!window.location.search) return console.log("no parameters");
 			let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
-			if (!url) return;
+			if (!url) return console.log("no url");
 			let xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					console.log(this.response);
 				}
 			};
+			xhttp.onerror = function() {console.log("error");};
 			xhttp.open("GET", url, true);
 			xhttp.send();
 	</head>
