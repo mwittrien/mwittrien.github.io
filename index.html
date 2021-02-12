@@ -6,6 +6,7 @@
 			let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
 			if (!url) return console.log("no url");
 			let xhttp = new XMLHttpRequest();
+			console.log(url);
 			xhttp.onreadystatechange = function() {
 				console.log(this);
 				if (this.readyState == 4 && this.status == 200) {
