@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script>
+		<script>(_ => {
 			if (!window.location.search) return console.log("no parameters");
 			let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
 			if (!url) return console.log("no url");
@@ -16,7 +16,7 @@
 			xhttp.onerror = function() {console.log("error");};
 			xhttp.open("GET", url, true);
 			xhttp.send();
-		</script>
+		})();</script>
 	</head>
 	<body></body>
 </html>
