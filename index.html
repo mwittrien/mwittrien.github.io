@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script>console.log(window.location);</script>
+		<script>
+			if (!window.location.search) return;
+			let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
+			if (!url) return;
+			let xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					console.log(this.response);
+				}
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
 	</head>
-	<body>
-		<h1>Hello World</h1>
-		<p>I'm hosted with GitHub Pages.</p>
-	</body>
+	<body></body>
 </html>
