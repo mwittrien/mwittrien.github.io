@@ -1,4 +1,8 @@
 (_ => {
+	console.log(document);
+	console.log(document.body);
+	console.log(document.firstElementChild.innerHTML);
+	console.log(document.firstElementChild.cloneNode(true).innerHTML);
 	const error = text => document.body.innerHTML = text;
 	if (!window.location.search) return error("No Parameters");
 	let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
