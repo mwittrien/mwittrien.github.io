@@ -1,24 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script>(_ => {
-			if (!window.location.search) return console.log("no parameters");
-			const url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
-			if (!url) return console.log("no url");
-			const xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					const objectURL = window.URL.createObjectURL(new Blob([this.response]));
-					const tempLink = document.createElement("a");
-					tempLink.href = objectURL;
-					tempLink.download = url.split("/").pop();
-					tempLink.click();
-				}
-			};
-			xhttp.onerror = function() {console.log("error");};
-			xhttp.open("GET", url, true);
-			xhttp.send();
-		})();</script>
+		<script url="./main.js"></script>
 	</head>
 	<body></body>
 </html>
