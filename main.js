@@ -8,9 +8,8 @@
 	const xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			const objectURL = window.URL.createObjectURL(new Blob([this.response]));
 			const tempLink = document.createElement("a");
-			tempLink.href = objectURL;
+			tempLink.href = window.URL.createObjectURL(new Blob([this.response]));
 			tempLink.download = url.split("/").pop();
 			tempLink.click();
 		}
