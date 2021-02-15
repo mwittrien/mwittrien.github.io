@@ -1,8 +1,4 @@
-(_ => {
-	console.log(document);
-	console.log(document.body);
-	console.log(document.firstElementChild.innerHTML);
-	console.log(document.firstElementChild.cloneNode(true).innerHTML);
+window.onload = function () {
 	const error = text => document.body.innerHTML = text;
 	if (!window.location.search) return error("No Parameters");
 	let url = (window.location.search.split("?ghdl=")[1] || "").split("?")[0];
@@ -21,4 +17,4 @@
 	xhttp.onerror = function() {error(`GitHub File <a>${url}</a> does not exist!`);};
 	xhttp.open("GET", url, true);
 	xhttp.send();
-})();
+};
