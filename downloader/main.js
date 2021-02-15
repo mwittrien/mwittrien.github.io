@@ -25,7 +25,7 @@ window.onload = function () {
 			theme: arg => `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Themes/${arg}/${arg}.theme.css`,
 			ghdl: arg => arg = arg.startsWith("https://") || arg.startsWith("http://") ? arg : `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/${arg}`
 		};
-		for (let parameter in ) {
+		for (let parameter in parameterList) {
 			let arg = (window.location.search.split(`?${parameter}=`)[1] || "").split("?")[0] || "";
 			if (arg) {
 				download(parameterList[parameter](arg));
