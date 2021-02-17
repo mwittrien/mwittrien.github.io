@@ -148,9 +148,14 @@
 }
 .sidebar-item.selected,
 .sidebar-item.selected:hover {
-    background-color: var(--background-modifier-selected);
-    color: var(--interactive-active);
-    cursor: default;
+	background-color: var(--background-modifier-selected);
+	color: var(--interactive-active);
+	cursor: default;
+}
+.sidebar-separator {
+	background-color: var(--background-modifier-accent);
+	margin: 8px 10px;
+	height: 1px;
 }
 
 .header {
