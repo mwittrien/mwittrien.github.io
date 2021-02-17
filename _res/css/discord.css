@@ -256,6 +256,7 @@ img[alt] {
 	position: relative;
 	box-sizing: border-box;
 	min-height: 0;
+	overflow: hidden scroller;
 }
 .scroller.thin {
 	scrollbar-width: thin;
