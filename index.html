@@ -3,8 +3,7 @@
 	<head>
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/discord.css"></link>
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/main.css"></link>
-		<style>
-		</style>
+		<style></style>
 		<script>
 			window.onload = function () {
 				const createElement = html => {
@@ -20,7 +19,7 @@
 						return wrapper;
 					}
 				};
-				const createAddon = addon => {
+				const createAddon = addon => {					
 					let card = createElement(`<div class="addon-card addon-loaded" role="button" tabindex="0">
 						<div class="addon-header">
 							<div class="addon-image-wrapper">
@@ -53,7 +52,7 @@
 						content.appendChild(createElement(`<div class="header">Plugins - ${plugins.length}</div>`));
 						content.appendChild(addons);
 					}
-					catch (err) {}
+					catch (err) {console.error("Error:", err, JSON.parse(this.response).message);}
 				};
 				xhttp.open("GET", "https://api.github.com/repos/mwittrien/BetterDiscordAddons/contents/Plugins");
 				xhttp.send();
@@ -69,7 +68,7 @@
 						<div class="layer">
 							<div class="sidebar-view">
 								<div class="sidebar-region">
-									<div class="scroller">
+									<div class="scroller fade">
 										<div class="sidebar"></div>
 									</div>
 								</div>

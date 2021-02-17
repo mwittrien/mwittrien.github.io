@@ -111,6 +111,48 @@
 	min-height: 100%;
 }
 
+.sidebar-header,
+.sidebar-item {
+    flex-shrink: 0;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+	padding: 6px 10px;
+}
+.sidebar-header {
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	text-transform: uppercase;
+	color: var(--channels-default);
+}
+.sidebar-item {
+	display: flex;
+	align-items: center;
+    position: relative;
+	border-radius: 3px;
+	color: var(--interactive-normal);
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-bottom: 2px;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+}
+.sidebar-item:hover {
+	background-color: var(--background-modifier-hover);
+}
+.sidebar-item:active {
+	background-color: var(--background-modifier-active);
+}
+.sidebar-item.selected,
+.sidebar-item.selected:hover {
+    background-color: var(--background-modifier-selected);
+    color: var(--interactive-active);
+    cursor: default;
+}
+
 .header {
 	color: var(--header-primary);
 	font-weight: 600;
