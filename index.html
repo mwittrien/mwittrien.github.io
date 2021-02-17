@@ -16,12 +16,12 @@
 						return wrapper;
 					}
 				};
-				fetch("https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins", {method: "GET"})
-					.then(response => response.json())
-					.then(json => {
-						console.log(json);
-					})
-					.catch(error => console.error("Error:", error));
+				const xhttp = new XMLHttpRequest();
+				xhttp.onload = function() {
+					console.log(this.response);
+				};
+				xhttp.open("GET", "https://mwittrien.github.io/downloader", true);
+				xhttp.send();
 			};
 		</script>
 	</head>
