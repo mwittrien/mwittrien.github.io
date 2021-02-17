@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+		window.onload = function () {
+			const createElement = html => {
+				if (typeof html != "string" || !html.trim()) return null;
+				let template = document.createElement("template");
+				try {template.innerHTML = html.replace(/(?<!pre)>[\t\r\n]+<(?!pre)/g, "><");}
+				catch (err) {template.innerHTML = html.replace(/>[\t\r\n]+<(?!pre)/g, "><");}
+				if (template.content.childNodes.length == 1) return template.content.firstElementChild || template.content.firstChild;
+				else {
+					let wrapper = document.createElement("span");
+					let nodes = Array.from(template.content.childNodes);
+					while (nodes.length) wrapper.appendChild(nodes.shift());
+					return wrapper;
+				}
+			};
+			const xhttp = new XMLHttpRequest();
+			xhttp.onload = function() {
+				for (let styleSheet of createElement(this.response).querySelectorAll("link")) if (styleSheet.href && styleSheet.href.endsWith(".css")) container.appendChild(styleSheet);
+				document.body.innerHTML = "Loaded";
+			};
+			xhttp.open("GET", "https://discord.com/", true);
+			xhttp.send();
+		};
+		</script>
+	</head>
+	<body></body>
+</html>
