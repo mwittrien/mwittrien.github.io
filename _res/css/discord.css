@@ -110,6 +110,7 @@
 	--deprecated-text-input-border-disabled: #dcddde;
 	--deprecated-text-input-prefix: #b9bbbe;
 }
+
 a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
 	margin: 0;
 	padding: 0;
@@ -143,6 +144,7 @@ p {
 ol, ul {
 	list-style: none;
 }
+
 ::-webkit-input-placeholder, input, select, textarea {
 	font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-weight: 400;
@@ -173,6 +175,7 @@ ol, ul {
 		font-weight: 500;
 	}
 }
+
 strong {
 	font-weight: 600;
 }
@@ -187,6 +190,7 @@ code {
 	font-size: 14px;
 	line-height: 16px;
 }
+
 @font-face {
 	font-family: Whitney;
 	font-weight: 300;
@@ -212,6 +216,7 @@ code {
 	font-weight: 700;
 	src: url(https://mwittrien.github.io/_res/fonts/Whitney700.woff) format("woff");
 }
+
 body, html {
 	height: 100%;
 	width: 100%;
@@ -221,6 +226,7 @@ body {
 	color: var(--header-primary);
 	text-rendering: optimizeLegibility;
 }
+
 ::-webkit-input-placeholder, body, button, input, select, textarea {
 	font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
 	text-rendering: optimizeLegibility;
@@ -237,9 +243,87 @@ body {
 	font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
 	text-rendering: optimizeLegibility;
 }
+
 a, button, div, input, label, select, span, strong, textarea {
 	outline: 0;
 }
 img[alt] {
 	text-indent: -9999px;
+}
+
+.scroller {
+	flex: 1 1 auto;
+	position: relative;
+	box-sizing: border-box;
+	min-height: 0;
+}
+.scroller.thin {
+	scrollbar-width: thin;
+}
+.scroller.thin,
+.scroller.thin.fade:hover {
+	scrollbar-color: var(--scrollbar-thin-thumb) var(--scrollbar-thin-track);
+}
+.scroller.thin::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+.scroller.thin::-webkit-scrollbar-track {
+	border-color: var(--scrollbar-thin-track);
+	background-color: var(--scrollbar-thin-track);
+	border: 2px solid var(--scrollbar-thin-track);
+}
+.scroller.thin::-webkit-scrollbar-thumb {
+	background-clip: padding-box;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	background-color: var(--scrollbar-thin-thumb);
+	min-height: 40px;
+}
+.scroller.thin::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller.auto {
+	scrollbar-width: auto;
+}
+.scroller.auto, .scroller.auto.fade:hover {
+	scrollbar-color: var(--scrollbar-auto-scrollbar-color-thumb) var(--scrollbar-auto-scrollbar-color-track);
+}
+.scroller.auto::-webkit-scrollbar {
+	width: 16px;
+	height: 16px;
+}
+.scroller.auto::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-auto-track);
+}
+.scroller.auto::-webkit-scrollbar-thumb,
+.scroller.auto::-webkit-scrollbar-track {
+	border: 4px solid transparent;
+	background-clip: padding-box;
+	border-radius: 8px;
+}
+.scroller.auto::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-auto-thumb);
+	min-height: 40px;
+}
+.scroller.auto::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller.none {
+	scrollbar-width: none;
+}
+.scroller.none::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+.scroller.fade {
+	scrollbar-color: transparent transparent;
+}
+.scroller.fade::-webkit-scrollbar-thumb,
+.scroller.fade::-webkit-scrollbar-track {
+	visibility: hidden;
+}
+.scroller.fade:hover::-webkit-scrollbar-thumb,
+.scroller.fade:hover::-webkit-scrollbar-track {
+	visibility: visible;
 }
