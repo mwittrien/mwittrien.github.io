@@ -218,6 +218,7 @@ body, html {
 }
 body {
 	background-color: var(--background-tertiary);
+	color: var(--header-primary);
 	text-rendering: optimizeLegibility;
 }
 ::-webkit-input-placeholder, body, button, input, select, textarea {
