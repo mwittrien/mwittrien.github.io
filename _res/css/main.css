@@ -81,7 +81,7 @@
 	left: 0;
 	width: 10px;
 	height: 10px;
-	background-color: #7289da;
+	background-color: var(--blurple);
 	animation: spinner-animation 1.8s ease-in-out infinite;
 	
 }
@@ -427,27 +427,116 @@
 	transition: color .17s ease;
 }
 .addon-link:hover {
-	color: var(--interactive-hover)
+	color: var(--interactive-hover);
 }
 .addon-link:active {
-	color: var(--interactive-active)
+	color: var(--interactive-active);
 }
 .addon-button {
-	background-color: #7289da;
+	background-color: var(--blurple);
 	color: #fff;
 	border-radius: 3px;
 	padding: 3px 6px;
 	transition: background-color .17s ease;
 }
 .addon-button:hover {
-	background-color: #677bc4;
+	background-color: var(--blurple-hover);
 }
 .addon-button:active {
-	background-color: #5b6eae;
+	background-color: var(--blurple-active);
 }
 .addon-button:first-of-type:not(:only-child) {
 	border-radius: 3px 0 0 3px;
 }
 .addon-button:last-of-type:not(:only-child) {
 	border-radius: 0 3px 3px 0;
+}
+
+.tooltip {
+	box-shadow: var(--elevation-high);
+	color: var(--text-normal);
+	border-radius: 5px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	max-width: 190px;
+	box-sizing: border-box;
+	word-wrap: break-word;
+	z-index: 1002;
+	will-change: opacity, transform;
+}
+.tooltip-pointer {
+	position: absolute;
+	border: 5px solid transparent;
+	width: 0;
+	height: 0;
+	margin-left: -5px;
+}
+.tooltip-content {
+	padding: 8px 12px;
+	overflow: hidden;
+}
+.tooltip-top {
+	transform-origin: 50% 100%;
+}
+.tooltip-right {
+	transform-origin: 0 50%;
+}
+.tooltip-bottom {
+	transform-origin: 50% 0;
+}
+.tooltip-left {
+	transform-origin: 100% 50%;
+}
+.tooltip-top .tooltip-pointer {
+	top: 100%;
+	left: 50%;
+}
+.tooltip-right .tooltip-pointer {
+	right: 100%;
+	top: 50%;
+	border-left-width: 5px;
+	transform: rotate(90deg);
+}
+.tooltip-bottom .tooltip-pointer {
+	bottom: 100%;
+	left: 50%;
+	border-top-width: 5px;
+	transform: rotate(180deg);
+}
+.tooltip-left .tooltip-pointer {
+	left: 100%;
+	top: 50%;
+	border-right-width: 5px;
+	transform: rotate(-90deg);
+}
+.tooltip-primary {
+	background-color: var(--background-floating);
+}
+.tooltip-primary .tooltip-pointer {
+	border-right-color: var(--background-floating);
+}
+.tooltip-blurple {
+	background-color: var(--blurple);
+}
+.tooltip-blurple .tooltip-pointer {
+	border-right-color: var(--blurple);
+}
+.tooltip-red {
+	background-color: var(--red);
+}
+.tooltip-red .tooltip-pointer {
+	border-right-color: var(--red);
+}
+.tooltip-yellow {
+	background-color: var(--yellow);
+}
+.tooltip-yellow .tooltip-pointer {
+	border-right-color: var(--yellow);
+}
+.tooltip-green {
+	background-color: var(--green);
+}
+.tooltip-green .tooltip-pointer {
+	border-right-color: var(--green);
 }
