@@ -56,6 +56,11 @@
 	75% {transform: translateX(0) translateY(22px) rotate(-270deg) scale(.5);}
 	to {transform: rotate(-1turn);}
 }
+.spinner-container {
+	flex: 1 1 auto;
+	min-height: 50px;
+}
+.spinner-container,
 .spinner {
 	display: flex;
 	justify-content: center;

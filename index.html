@@ -25,7 +25,7 @@
 				
 				const createLoadingList = (url, getHeader, getChildren) => {
 					let header = createElement(`<div class="header">${typeof getHeader == "function" ? getHeader(0) : getHeader}</div>`);
-					let list = createElement(`<div class="addon-list"><div class="loading-placeholder"></div></div>`);
+					let list = createElement(`<div class="addon-list"><div class="spinner-container"><span class="spinner"><span class="spinner-inner"><span class="spinner-item"></span><span class="spinner-item"></span></span></span></div></div>`);
 					
 					const xhttp = new XMLHttpRequest();
 					xhttp.onload = function() {
