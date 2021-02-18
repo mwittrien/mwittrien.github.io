@@ -19,7 +19,37 @@
 						return wrapper;
 					}
 				};
-				const createAddon = addon => {
+				const formatClassName = (...classes) => {
+					return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
+				};
+				
+				const createAddonList = type => {
+					let wrapper = createElement(`<div class="addon-list-wrapper"></div>`);
+					let header = createElement(`<div class="header">${type} - 0</div>`);
+					let list = createElement(`<div class="addon-list"></div>`);
+					content.appendChild(header);
+					content.appendChild(list);
+					
+					const xhttp = new XMLHttpRequest();
+					xhttp.onload = function() {
+						if (!document.contains(list)) return;
+						try {
+							let addons = this.response.split("- [").splice(1).map(n => {
+								let m = n.split("](");
+								let l = m[1].split(") - ");
+								return {name: m[0], description: l[1], folder: l[0]};
+							});
+							for (let addon of addons) list.appendChild(createAddonCard(addon));
+							header.innerText = `${type} - ${addons.length}`;
+						}
+						catch (err) {console.error("Error:", err, JSON.parse(this.response).message);}
+					};
+					xhttp.open("GET", `https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`);
+					xhttp.send();
+					
+					return wrapper;
+				};
+				const createAddonCard = addon => {
 					let card = createElement(`<div class="addon-card addon-loaded" role="button" tabindex="0">
 						<div class="addon-header">
 							<div class="addon-image-wrapper">
@@ -43,19 +73,32 @@
 				const sidebar = document.querySelector(".sidebar-region .sidebar");
 				const content = document.querySelector(".content-region .content");
 				
-				const xhttp = new XMLHttpRequest();
-				xhttp.onload = function() {
-					try {
-						let plugins = JSON.parse(this.response).filter(plugin => plugin.name && !plugin.name.startsWith("_"));
-						let addons = createElement(`<div class="addon-list"></div>`);
-						for (let plugin of plugins) addons.appendChild(createAddon(plugin));
-						content.appendChild(createElement(`<div class="header">Plugins - ${plugins.length}</div>`));
-						content.appendChild(addons);
+				const sections = [
+					{section: "General", renderSection: _ => {}},
+					{section: "Separator"},
+					{section: "Plugins", renderSection: _ => createAddonList("Plugins")},
+					{section: "Themes", renderSection: _ => createAddonList("Themes")},
+					{section: "Separator"},
+					{section: "Generator", renderSection: _ => {}}
+				];
+				let selectedSection = sections[0].section;
+				let items = [];
+				
+				for (const data of sections) {
+					const item = createElement(data.renderSection ? `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>` : `<div class="sidebar-separator"></div>`);
+					if (data.renderSection) {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							while (content.childElementCount) content.firstElementChild.remove();
+							let section = data.renderSection();
+							if (section) content.appendChild(section);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+							selectedSection = data.section;
+						});
 					}
-					catch (err) {console.error("Error:", err, JSON.parse(this.response).message);}
-				};
-				xhttp.open("GET", "https://api.github.com/repos/mwittrien/BetterDiscordAddons/contents/Plugins");
-				xhttp.send();
+					sidebar.appendChild(item);
+				}
 			};
 		</script>
 	</head>
@@ -69,18 +112,11 @@
 							<div class="sidebar-view">
 								<div class="sidebar-region">
 									<div class="scroller fade">
-										<div class="sidebar">
-											<div class="sidebar-item selected">General</div>
-											<div class="sidebar-item">Plugins</div>
-											<div class="sidebar-item">Themes</div>
-											<div class="sidebar-item">Generator</div>
-											<div class="sidebar-separator"></div>
-											<div class="sidebar-item">About Me</div>
-										</div>
+										<div class="sidebar"></div>
 									</div>
 								</div>
 								<div class="content-region">
-									<div class="scroller">
+									<div class="scroller auto">
 										<div class="content"></div>
 									</div>
 								</div>
