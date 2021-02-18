@@ -458,13 +458,16 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: none !important;
+	background: none;
 	pointer-events: none;
 	z-index: 1002;
 }
 .layer-item {
 	position: absolute;
 	pointer-events: auto;
+}
+.layer-item-disabled {
+	pointer-events: none;
 }
 
 .tooltip {
