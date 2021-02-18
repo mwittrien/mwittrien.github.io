@@ -330,9 +330,9 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	transition: opacity .2s,transform .2s ease-out;
+	background-color: var(--background-tertiary);
 	transform: scale(1);
-	opacity: 1;
+	transition: transform .2s ease-out;
 }
 .addon-card:focus .addon-image-wrapper,
 .addon-card:hover .addon-image-wrapper {
