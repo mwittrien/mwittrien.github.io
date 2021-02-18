@@ -239,11 +239,11 @@
 	padding: 6px 10px;
 }
 .sidebar-header {
+	color: var(--channels-default);
 	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;
 	text-transform: uppercase;
-	color: var(--channels-default);
 }
 .sidebar-item {
 	display: flex;

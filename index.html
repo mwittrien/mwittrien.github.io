@@ -161,8 +161,8 @@
 					return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", "Required Library", response => {
 						let parsedResponse = response.trim().replace(/\r/g, "");
 						return createAddonCard({
-							name: (parsedResponse.split(" -")[0] || "").replace("# ", ""),
-							description: parsedResponse.split("\n").pop(),
+							name: (parsedResponse.split(" -")[0] || "").replace("# ", "").trim(),
+							description: (parsedResponse.split("\n").pop() || "").trim(),
 							buttons: [{
 								text: "Download",
 								svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
@@ -177,8 +177,8 @@
 							let m = n.split("](");
 							let l = m[1].split(") - ");
 							return createAddonCard({
-								name: m[0],
-								description: l[1],
+								name: (m[0] || "").trim(),
+								description: (l[1] || "").trim(),
 								buttons: [{
 									text: "Download",
 									svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
@@ -189,13 +189,16 @@
 					});
 				};
 				const createAddonCard = addon => {
+					let nameWords = addon.name.split(" ");
+					console.log(nameWords);
+					let iconName = addon.name.toUpperCase() == addon.name ? addon.name : nameWords.map(c => c[0].toUpperCase() + (nameWords.length < 2 ? "" : c[1].toLowerCase())).join("");
 					let card = createElement(`<div class="addon-card" role="button" tabindex="0">
 						<div class="addon-header">
 							<div class="addon-image-wrapper">
 								<img class="addon-image" src="" alt="">
 							</div>
 							<div class="addon-icon-wrapper">
-								<img class="addon-icon" src="" alt="">
+								<span class="addon-icon">${iconName}</span>
 							</div>
 						</div>
 						<div class="addon-info">
@@ -230,6 +233,7 @@
 				const content = document.querySelector(".content-region .content");
 				
 				const sections = [
+					{section: "Header", header: "My Stuff"},
 					{section: "General", renderSection: _ => {}},
 					{section: "Separator"},
 					{section: "Plugins", renderSection: _ => [createAddonList("Plugins"), createElement(`<div class="divider"></div>`), createLibraryEntry()]},
@@ -237,11 +241,11 @@
 					{section: "Separator"},
 					{section: "Generator", renderSection: _ => {}}
 				];
-				let selectedSection = sections[0].section;
+				let selectedSection = sections.find(data => data.section != "Header" && data.section != "Separator").section;
 				let items = [];
 				
 				for (const data of sections) {
-					const item = createElement(data.renderSection ? `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>` : `<div class="sidebar-separator"></div>`);
+					const item = createElement(data.section == "Header" ? `<div class="sidebar-header">${data.header}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
 					if (data.renderSection) {
 						items.push(item);
 						item.addEventListener("click", _ => {
