@@ -54,7 +54,10 @@
 						return createAddonCard({
 							name: (parsedResponse.split(" -")[0] || "").replace("# ", ""),
 							description: parsedResponse.split("\n").pop(),
-							url: "https://mwittrien.github.io/BetterDiscordAddons/Library"
+							buttons: [{
+								svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
+								onClick: _ => window.open("https://mwittrien.github.io/downloader/?library", "_target")
+							}]
 						});
 					});
 				};
@@ -66,7 +69,10 @@
 							return createAddonCard({
 								name: m[0],
 								description: l[1],
-								folder: l[0]
+								buttons: [{
+									svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
+									onClick: _ => window.open(`https://mwittrien.github.io/downloader/?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`, "_target")
+								}]
 							});
 						});
 					});
@@ -86,9 +92,24 @@
 								<div class="addon-name">${addon.name}</div>
 							</div>
 							<div class="addon-description">${addon.description}</div>
-							<div class="addon-controls"></div>
+							<div class="addon-controls">
+								<div class="addon-links"></div>
+								<div class="addon-buttons"></div>
+							</div>
 						</div>
 					</div>`);
+					let links = card.querySelector(".addon-links");
+					let buttons = card.querySelector(".addon-buttons");
+					if (addon.links) for (let link of addon.links) {
+						let linkEle = createElement(`<div class="addon-link">${link.svg}</div>`);
+						if (link.url) linkEle.addEventListener("click", _ => window.open(addon.url, "_target"));
+						links.appendChild(linkEle);
+					}
+					if (addon.buttons) for (let button of addon.buttons) {
+						let buttonEle = createElement(`<div class="addon-button">${button.svg}</div>`);
+						if (button.onClick) buttonEle.addEventListener("click", button.onClick);
+						buttons.appendChild(buttonEle);
+					}
 					return card;
 				};
 				
