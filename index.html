@@ -6,6 +6,9 @@
 		<style></style>
 		<script>
 			window.onload = function () {
+				const getRects = node => {
+					return Node.prototype.isPrototypeOf(node) && node.nodeType != Node.TEXT_NODE ? node.getBoundingClientRect() : {};
+				};
 				const createElement = html => {
 					if (typeof html != "string" || !html.trim()) return null;
 					let template = document.createElement("template");
@@ -23,6 +26,112 @@
 					return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
 				};
 				
+				const createTooltip = (anker, text, config = {}) => {
+					let itemLayerContainer = document.querySelector(".layer-items");
+					if (!itemLayerContainer) return;
+					let itemLayer = createElement(`<div class="layer-item layer-item-disabled">
+						<div class="tooltip">
+							<div class="tooltip-pointer"></div>
+							<div class="tooltip-content"></div>
+						</div>
+					</div>`);
+					itemLayerContainer.appendChild(itemLayer);
+					
+					let tooltip = itemLayer.firstElementChild;
+					let tooltipContent = itemLayer.querySelector(".tooltip-content");
+					let tooltipPointer = itemLayer.querySelector(".tooltip-pointer");
+					
+					if (config.id) tooltip.id = config.id.split(" ").join("");
+					let type = config.type || "top";
+					tooltip.classList.add(`tooltip-${type}`);
+					tooltip.classList.add(config.color ? `tooltip-${config.color}` : "tooltip-primary");
+
+					let mouseMove = e => {
+						let parent = e.target.parentElement.querySelector(":hover");
+						if (parent && anker != parent && !anker.contains(parent)) itemLayer.removeTooltip();
+					};
+					let mouseLeave = e => {itemLayer.removeTooltip();};
+					document.addEventListener("mousemove", mouseMove);
+					document.addEventListener("mouseleave", mouseLeave);
+					
+					let observer = new MutationObserver(changes => changes.forEach(change => {
+						let nodes = Array.from(change.removedNodes);
+						if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n => n.contains(anker))) itemLayer.removeTooltip();
+					}));
+					observer.observe(document.body, {subtree: true, childList: true});
+					
+					(tooltip.setText = itemLayer.setText = newText => {
+						if (config.html) tooltipContent.innerHTML = newText;
+						else tooltipContent.innerText = newText;
+					})(text);
+					(tooltip.removeTooltip = itemLayer.removeTooltip = _ => {
+						document.removeEventListener("mousemove", mouseMove);
+						document.removeEventListener("mouseleave", mouseLeave);
+						itemLayer.remove();
+						observer.disconnect();
+					});
+					(tooltip.update = itemLayer.update = newText => {
+						if (newText) tooltip.setText(newText);
+						let left, top;
+						const tRects = getRects(anker);
+						const iRects = getRects(itemLayer);
+						const aRects = getRects(document.querySelector(".app-mount"));
+						const positionOffsets = {height: 10, width: 10};
+						const offset = typeof config.offset == "number" ? config.offset : 0;
+						switch (type) {
+							case "top":
+								top = tRects.top - iRects.height - positionOffsets.height + 2 - offset;
+								left = tRects.left + (tRects.width - iRects.width) / 2;
+								break;
+							case "bottom":
+								top = tRects.top + tRects.height + positionOffsets.height - 2 + offset;
+								left = tRects.left + (tRects.width - iRects.width) / 2;
+								break;
+							case "left":
+								top = tRects.top + (tRects.height - iRects.height) / 2;
+								left = tRects.left - iRects.width - positionOffsets.width + 2 - offset;
+								break;
+							case "right":
+								top = tRects.top + (tRects.height - iRects.height) / 2;
+								left = tRects.left + tRects.width + positionOffsets.width - 2 + offset;
+								break;
+							}
+							
+						itemLayer.style.setProperty("top", `${top}px`, "important");
+						itemLayer.style.setProperty("left", `${left}px`, "important");
+						
+						tooltipPointer.style.removeProperty("margin-left");
+						tooltipPointer.style.removeProperty("margin-top");
+						if (type == "top" || type == "bottom") {
+							if (left < 0) {
+								itemLayer.style.setProperty("left", "5px", "important");
+								tooltipPointer.style.setProperty("margin-left", `${left - 10}px`, "important");
+							}
+							else {
+								const rightMargin = aRects.width - (left + iRects.width);
+								if (rightMargin < 0) {
+									itemLayer.style.setProperty("left", `${aRects.width - iRects.width - 5}px`, "important");
+									tooltipPointer.style.setProperty("margin-left", `${-1*rightMargin}px`, "important");
+								}
+							}
+						}
+						else if (type == "left" || type == "right") {
+							if (top < 0) {
+								itemLayer.style.setProperty("top", `5px`, "important");
+								tooltipPointer.style.setProperty("margin-top", `${top - 10}px`, "important");
+							}
+							else {
+								const bottomMargin = aRects.height - (top + iRects.height);
+								if (bottomMargin < 0) {
+									itemLayer.style.setProperty("top", `${aRects.height - iRects.height - 5}px`, "important");
+									tooltipPointer.style.setProperty("margin-top", `${-1*bottomMargin}px`, "important");
+								}
+							}
+						}
+					})();
+					
+					return itemLayer;
+				};
 				const createSpinner = wrap => {
 					return createElement(`${wrap ? '<div class="spinner-container">' : ''}<span class="spinner"><span class="spinner-inner"><span class="spinner-item"></span><span class="spinner-item"></span></span></span>${wrap ? '</div>' : ''}`);
 				};
@@ -55,6 +164,7 @@
 							name: (parsedResponse.split(" -")[0] || "").replace("# ", ""),
 							description: parsedResponse.split("\n").pop(),
 							buttons: [{
+								text: "Download",
 								svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
 								onClick: _ => window.open("https://mwittrien.github.io/downloader/?library", "_target")
 							}]
@@ -70,6 +180,7 @@
 								name: m[0],
 								description: l[1],
 								buttons: [{
+									text: "Download",
 									svg: `<svg viewBox="0 0 24 24" class=""><path fill="currentColor" d="M 16.293,9.2929995 17.707,10.707 12,16.414 6.29297,10.707 7.70697,9.2929995 11,12.586 V 1.9999995 h 2 V 12.586 Z M 18,20 v -2 h 2 v 2 c 0,1.102 -0.896,2 -2,2 H 6 C 4.896,22 4,21.102 4,20 v -2 h 2 v 2 z" class=""></path></svg>`,
 									onClick: _ => window.open(`https://mwittrien.github.io/downloader/?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`, "_target")
 								}]
@@ -102,11 +213,13 @@
 					let buttons = card.querySelector(".addon-buttons");
 					if (addon.links) for (let link of addon.links) {
 						let linkEle = createElement(`<div class="addon-link">${link.svg}</div>`);
+						if (link.text) linkEle.addEventListener("mouseenter", _ => createTooltip(linkEle, link.text));
 						if (link.url) linkEle.addEventListener("click", _ => window.open(addon.url, "_target"));
 						links.appendChild(linkEle);
 					}
 					if (addon.buttons) for (let button of addon.buttons) {
 						let buttonEle = createElement(`<div class="addon-button">${button.svg}</div>`);
+						if (button.text) buttonEle.addEventListener("mouseenter", _ => createTooltip(buttonEle, button.text));
 						if (button.onClick) buttonEle.addEventListener("click", button.onClick);
 						buttons.appendChild(buttonEle);
 					}
@@ -169,6 +282,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="layer-items"></div>
 		</div>
 	</body>
 </html>
