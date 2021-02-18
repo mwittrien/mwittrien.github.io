@@ -23,15 +23,20 @@
 					return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
 				};
 				
+				const createSpinner = wrap => {
+					return createElement(`${wrap ? '<div class="spinner-container">' : ''}<span class="spinner"><span class="spinner-inner"><span class="spinner-item"></span><span class="spinner-item"></span></span></span>${wrap ? '</div>' : ''}`);
+				};
 				const createLoadingList = (url, getHeader, getChildren) => {
 					let header = createElement(`<div class="header">${typeof getHeader == "function" ? getHeader(0) : getHeader}</div>`);
-					let list = createElement(`<div class="addon-list"><div class="spinner-container"><span class="spinner"><span class="spinner-inner"><span class="spinner-item"></span><span class="spinner-item"></span></span></span></div></div>`);
+					let list = createElement(`<div></div>`);
+					list.appendChild(createSpinner(true));
 					
 					const xhttp = new XMLHttpRequest();
 					xhttp.onload = function() {
 						if (!document.contains(list)) return;
 						try {
 							while (list.childElementCount) list.firstElementChild.remove();
+							list.classList.add("addon-list");
 							let children = [getChildren(this.response)].flat(10).filter(n => n);
 							for (let child of children) list.appendChild(child);
 							header.innerText = typeof getHeader == "function" ? getHeader(children.length) : getHeader;

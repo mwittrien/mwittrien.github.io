@@ -401,6 +401,53 @@
 }
 .addon-controls {
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	flex: 0 0 auto;
+}
+.addon-links,
+.addon-buttons {
+	display: flex;
+	align-items: center;
+}
+.addon-link,
+.addon-button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+.addon-link > svg,
+.addon-button > svg {
+	width: 20px;
+	height: 20px;
+}
+.addon-link {
+	color: var(--interactive-normal)
+	height: 24px;
+	transition: color .17s ease;
+}
+.addon-link:hover {
+	color: var(--interactive-hover)
+}
+.addon-link:active {
+	color: var(--interactive-active)
+}
+.addon-button {
+	background-color: #7289da;
+	color: #fff;
+	border-radius: 3px;
+	padding: 3px 6px;
+	transition: background-color .17s ease;
+}
+.addon-button:hover {
+	background-color: #677bc4;
+}
+.addon-button:active {
+	background-color: #5b6eae;
+}
+.addon-button:first-of-type:not(:only-child) {
+	border-radius: 3px 0 0 3px;
+}
+.addon-button:last-of-type:not(:only-child) {
+	border-radius: 0 3px 3px 0;
 }
