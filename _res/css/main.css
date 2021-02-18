@@ -509,7 +509,6 @@
 .tooltip-top .tooltip-pointer {
 	top: 100%;
 	left: 50%;
-	border-bottom-width: 5px;
 }
 .tooltip-right .tooltip-pointer {
 	right: 100%;
@@ -539,23 +538,23 @@
 	background-color: var(--blurple);
 }
 .tooltip-blurple .tooltip-pointer {
-	border-color: var(--blurple);
+	border-top-color: var(--blurple);
 }
 .tooltip-red {
 	background-color: var(--red);
 }
 .tooltip-red .tooltip-pointer {
-	border-color: var(--red);
+	border-top-color: var(--red);
 }
 .tooltip-yellow {
 	background-color: var(--yellow);
 }
 .tooltip-yellow .tooltip-pointer {
-	border-color: var(--yellow);
+	border-top-color: var(--yellow);
 }
 .tooltip-green {
 	background-color: var(--green);
 }
 .tooltip-green .tooltip-pointer {
-	border-color: var(--green);
+	border-top-color: var(--green);
 }
