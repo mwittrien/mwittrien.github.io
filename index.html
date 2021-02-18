@@ -23,34 +23,52 @@
 					return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
 				};
 				
-				const createAddonList = type => {
-					let wrapper = createElement(`<div class="addon-list-wrapper"></div>`);
-					let header = createElement(`<div class="header">${type} - 0</div>`);
-					let list = createElement(`<div class="addon-list"></div>`);
-					content.appendChild(header);
-					content.appendChild(list);
+				const createLoadingList = (url, getHeader, getChildren) => {
+					let header = createElement(`<div class="header">${typeof getHeader == "function" ? getHeader(0) : getHeader}</div>`);
+					let list = createElement(`<div class="addon-list"><div class="loading-placeholder"></div></div>`);
 					
 					const xhttp = new XMLHttpRequest();
 					xhttp.onload = function() {
 						if (!document.contains(list)) return;
 						try {
-							let addons = this.response.split("- [").splice(1).map(n => {
-								let m = n.split("](");
-								let l = m[1].split(") - ");
-								return {name: m[0], description: l[1], folder: l[0]};
-							});
-							for (let addon of addons) list.appendChild(createAddonCard(addon));
-							header.innerText = `${type} - ${addons.length}`;
+							while (content.childElementCount) content.firstElementChild.remove();
+							let children = [getChildren(this.response)].flat(10).filter(n => n);
+							console.log(children);
+							for (let child of children) list.appendChild(child);
+							header.innerText = typeof getHeader == "function" ? getHeader(children.length) : getHeader;
 						}
-						catch (err) {console.error("Error:", err, JSON.parse(this.response).message);}
+						catch (err) {console.error("Error:", err);}
 					};
-					xhttp.open("GET", `https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`);
+					xhttp.open("GET", url);
 					xhttp.send();
 					
-					return wrapper;
+					return [header, list];
+				};
+				const createLibraryEntry = _ => {
+					return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", "Required Library", response => {
+						let parsedResponse = response.trim().replace(/\r/g, "");
+						return createAddonCard({
+							name: (parsedResponse.split(" -")[0] || "").replace("# ", ""),
+							description: parsedResponse.split("\n").pop(),
+							url: "https://mwittrien.github.io/BetterDiscordAddons/Library"
+						});
+					});
+				};
+				const createAddonList = type => {
+					return createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`, amount => `${type} - ${amount}`, response => {
+						return response.split("- [").splice(1).map(n => {
+							let m = n.split("](");
+							let l = m[1].split(") - ");
+							return createAddonCard({
+								name: m[0],
+								description: l[1],
+								folder: l[0]
+							});
+						});
+					});
 				};
 				const createAddonCard = addon => {
-					let card = createElement(`<div class="addon-card addon-loaded" role="button" tabindex="0">
+					let card = createElement(`<div class="addon-card" role="button" tabindex="0">
 						<div class="addon-header">
 							<div class="addon-image-wrapper">
 								<img class="addon-image" src="" alt="">
@@ -76,7 +94,7 @@
 				const sections = [
 					{section: "General", renderSection: _ => {}},
 					{section: "Separator"},
-					{section: "Plugins", renderSection: _ => createAddonList("Plugins")},
+					{section: "Plugins", renderSection: _ => [createAddonList("Plugins"), createElement(`<div class="divider"></div>`), createLibraryEntry()]},
 					{section: "Themes", renderSection: _ => createAddonList("Themes")},
 					{section: "Separator"},
 					{section: "Generator", renderSection: _ => {}}
@@ -90,8 +108,8 @@
 						items.push(item);
 						item.addEventListener("click", _ => {
 							while (content.childElementCount) content.firstElementChild.remove();
-							let section = data.renderSection();
-							if (section) content.appendChild(section);
+							let sectionElements = [data.renderSection()].flat(10).filter(n => n);
+							for (let element of sectionElements) content.appendChild(element);
 							for (let i of items) i.classList.remove("selected");
 							item.classList.add("selected");
 							selectedSection = data.section;
