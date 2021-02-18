@@ -132,6 +132,7 @@
 					if (data.renderSection) {
 						items.push(item);
 						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
 							while (content.childElementCount) content.firstElementChild.remove();
 							let sectionElements = [data.renderSection()].flat(10).filter(n => n);
 							for (let element of sectionElements) content.appendChild(element);
