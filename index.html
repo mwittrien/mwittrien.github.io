@@ -31,9 +31,8 @@
 					xhttp.onload = function() {
 						if (!document.contains(list)) return;
 						try {
-							while (content.childElementCount) content.firstElementChild.remove();
+							while (list.childElementCount) list.firstElementChild.remove();
 							let children = [getChildren(this.response)].flat(10).filter(n => n);
-							console.log(children);
 							for (let child of children) list.appendChild(child);
 							header.innerText = typeof getHeader == "function" ? getHeader(children.length) : getHeader;
 						}

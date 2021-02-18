@@ -50,6 +50,117 @@
 	background-color: var(--background-primary);
 }
 
+@keyframes spinner-animation {
+	25% {transform: translateX(22px) rotate(-90deg) scale(.5);}
+	50% {transform: translateX(22px) translateY(22px) rotate(-180deg);}
+	75% {transform: translateX(0) translateY(22px) rotate(-270deg) scale(.5);}
+	to {transform: rotate(-1turn);}
+}
+.spinner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.spinner-inner {
+	display: inline-block;
+	position: relative;
+	width: 32px;
+	height: 32px;
+	contain: paint;
+}
+.spinner-item {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	background-color: #7289da;
+	animation: spinner-animation 1.8s ease-in-out infinite;
+	
+}
+.spinner-item:last-child {
+	animation-delay:-.9s;
+	
+}
+
+.scroller {
+	flex: 1 1 auto;
+	position: relative;
+	box-sizing: border-box;
+	min-height: 0;
+	overflow: hidden scroller;
+}
+.scroller.thin {
+	scrollbar-width: thin;
+}
+.scroller.thin,
+.scroller.thin.fade:hover {
+	scrollbar-color: var(--scrollbar-thin-thumb) var(--scrollbar-thin-track);
+}
+.scroller.thin::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+.scroller.thin::-webkit-scrollbar-track {
+	border-color: var(--scrollbar-thin-track);
+	background-color: var(--scrollbar-thin-track);
+	border: 2px solid var(--scrollbar-thin-track);
+}
+.scroller.thin::-webkit-scrollbar-thumb {
+	background-clip: padding-box;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	background-color: var(--scrollbar-thin-thumb);
+	min-height: 40px;
+}
+.scroller.thin::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller.auto {
+	scrollbar-width: auto;
+}
+.scroller.auto, .scroller.auto.fade:hover {
+	scrollbar-color: var(--scrollbar-auto-scrollbar-color-thumb) var(--scrollbar-auto-scrollbar-color-track);
+}
+.scroller.auto::-webkit-scrollbar {
+	width: 16px;
+	height: 16px;
+}
+.scroller.auto::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-auto-track);
+}
+.scroller.auto::-webkit-scrollbar-thumb,
+.scroller.auto::-webkit-scrollbar-track {
+	border: 4px solid transparent;
+	background-clip: padding-box;
+	border-radius: 8px;
+}
+.scroller.auto::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-auto-thumb);
+	min-height: 40px;
+}
+.scroller.auto::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller.none {
+	scrollbar-width: none;
+}
+.scroller.none::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+.scroller.fade {
+	scrollbar-color: transparent transparent;
+}
+.scroller.fade::-webkit-scrollbar-thumb,
+.scroller.fade::-webkit-scrollbar-track {
+	visibility: hidden;
+}
+.scroller.fade:hover::-webkit-scrollbar-thumb,
+.scroller.fade:hover::-webkit-scrollbar-track {
+	visibility: visible;
+}
+
 .sidebar-view {
 	display: flex;
 	position: absolute;
