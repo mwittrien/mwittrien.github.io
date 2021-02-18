@@ -528,6 +528,13 @@
 	border-right-width: 5px;
 	transform: rotate(-90deg);
 }
+.tooltip-black {
+	background-color: #000;
+	color: #fff;
+}
+.tooltip-black .tooltip-pointer {
+	border-top-color: #000;
+}
 .tooltip-primary {
 	background-color: var(--background-floating);
 }
