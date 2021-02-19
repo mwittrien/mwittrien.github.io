@@ -370,11 +370,17 @@
 	top: 4px;
 	right: 4px;
 	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
 	color: #bbb;
-	width: 24px;
-	height: 24px;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
 	opacity: 0;
 	transition: color .17s ease, opacity .2s ease-out;
+}
+.addon-screenshots svg {
+	width: 24px;
+	height: 24px;
 }
 .addon-screenshots:hover {
 	color: #ddd;
