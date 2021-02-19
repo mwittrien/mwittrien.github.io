@@ -338,6 +338,29 @@
 .addon-card:hover .addon-image-wrapper {
 	transform: scale(1.01) translateZ(0);
 }
+.addon-screenshots {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top: 4px;
+	right: 4px;
+	background-color: rgba(0, 0, 0, 0.2);
+	color: #bbb;
+	width: 24px;
+	height: 24px;
+	opacity: 0;
+	transition: color .17s ease, opacity .2s ease-out;
+}
+.addon-screenshots:hover {
+	color: #ddd;
+}
+.addon-screenshots:active {
+	color: #fff;
+}
+.addon-image-wrapper:hover .addon-screenshots {
+	opacity: 1;
+}
 .addon-image-wrapper,
 .addon-image {
 	width: 100%;
