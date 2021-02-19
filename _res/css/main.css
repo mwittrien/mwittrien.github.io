@@ -422,7 +422,7 @@
 	height: 20px;
 }
 .addon-link {
-	color: var(--interactive-normal)
+	color: var(--interactive-normal);
 	height: 24px;
 	margin-right: 6px;
 	transition: color .17s ease;
