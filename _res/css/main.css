@@ -446,6 +446,7 @@
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }
 .addon-link {
 	color: var(--interactive-normal);
