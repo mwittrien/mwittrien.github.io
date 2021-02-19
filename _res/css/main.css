@@ -362,6 +362,9 @@
 .addon-card:hover .addon-icon-wrapper {
 	background-color: var(--background-tertiary);
 }
+.addon-header.has-screenshots {
+	cursor: pointer;
+}
 .addon-screenshots {
 	display: inline-flex;
 	justify-content: center;
@@ -374,7 +377,6 @@
 	color: #bbb;
 	width: 32px;
 	height: 32px;
-	cursor: pointer;
 	opacity: 0;
 	transition: color .17s ease, opacity .2s ease-out;
 }
