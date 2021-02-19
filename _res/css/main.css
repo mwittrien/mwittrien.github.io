@@ -334,7 +334,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: var(--background-tertiary);
+	background-color: #000;
 	transform: scale(1);
 	transition: transform .2s ease-out;
 }
