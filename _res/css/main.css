@@ -185,22 +185,26 @@
 .sidebar-region {
 	flex: 1 0 140px;
 	z-index: 1;
+	background-color: var(--background-secondary);
 }
 .sidebar-region,
 .sidebar-region .scroller {
 	display: flex;
+	flex-direction: column;
 	justify-content: flex-end;
 }
 .sidebar-region .scroller {
 	flex: 1 0 auto;
 	flex-direction: row;
 	align-items: flex-start;
-	background: var(--background-secondary);
 }
 .sidebar {
+	flex-direction: column;
+}
+.sidebar,
+.sidebar-footer {
 	display: flex;
 	flex: 1;
-	flex-direction: column;
 	width: 140px;
 	padding: 60px 6px 60px 20px;
 }
@@ -209,7 +213,7 @@
 	flex: 1 1 800px;
 	align-items: flex-start;
 	position: relative;
-	background: var(--background-primary);
+	background-color: var(--background-primary);
 }
 .content-region .scroller {
 	display: flex;
@@ -218,7 +222,6 @@
 	align-items: flex-start;
 	position: static;
 	height: 100%;
-	background-color: var(--background-primary);
 	overflow-x: hidden;
 }
 .content {
