@@ -199,13 +199,16 @@
 }
 .sidebar {
 	flex-direction: column;
+	padding: 60px 6px 60px 20px;
+}
+.sidebar-footer {
+	padding: 0 6px 0 20px;
 }
 .sidebar,
 .sidebar-footer {
 	display: flex;
 	flex: 1;
 	width: 140px;
-	padding: 60px 6px 60px 20px;
 }
 .content-region {
 	display: flex;
