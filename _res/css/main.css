@@ -299,15 +299,14 @@
 .addon-card {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	height: 320px;
 	width: 100%;
-	overflow: hidden;
-	border-radius: 8px;
-	position: relative;
-	transition: box-shadow .2s ease-out,transform .2s ease-out,background .2s ease-out,opacity .2s ease-in;
-	cursor: pointer;
 	background-color: var(--activity-card-background);
+	border-radius: 8px;
 	box-shadow: var(--elevation-medium);
+	overflow: hidden;
+	transition: box-shadow .2s ease-out,transform .2s ease-out,background .2s ease-out,opacity .2s ease-in;
 }
 .theme-dark .addon-card {
 	background-color: var(--background-secondary-alt);
