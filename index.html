@@ -273,20 +273,28 @@
 				};
 				
 				const sidebar = document.querySelector(".sidebar-region .sidebar");
+				const sidebarHeader = document.querySelector(".sidebar-region .sidebar-header");
 				const sidebarFooter = document.querySelector(".sidebar-region .sidebar-footer");
 				const content = document.querySelector(".content-region .content");
 				
 				const sections = [
-					{section: "Header", header: "My Stuff"},
+					{section: "Title", title: "My Stuff"},
 					{section: "General", renderSection: _ => {}},
 					{section: "Separator"},
 					{section: "Plugins", renderSection: _ => [createAddonList("Plugins", ".plugin.js"), createElement(`<div class="divider"></div>`), createLibraryEntry()]},
-					{section: "Themes", renderSection: _ => createAddonList("Themes", ".theme.css")},
-					{section: "Separator"},
-					{section: "Generator", renderSection: _ => {}}
+					{section: "Themes", renderSection: _ => createAddonList("Themes", ".theme.css")}
 				];
-				let selectedSection = sections.find(data => data.section != "Header" && data.section != "Separator").section;
 				let items = [];
+				
+				let selectedSection;
+				const renderContent = data => {
+					if (typeof data.renderSection != "function") return;
+					while (content.childElementCount) content.firstElementChild.remove();
+					let sectionElements = [data.renderSection()].flat(10).filter(n => n);
+					for (let element of sectionElements) content.appendChild(element);
+					selectedSection = data.section;
+				};
+				renderContent(sections.find(data => data.section != "Title" && data.section != "Separator"));
 				
 				let themeSwitch = createElement(`<div class="theme-switch"></div>`);
 				themeSwitch.appendChild(createElement(`<svg width="14" height="14" viewBox="0 0 24 24"><path fill="currentColor" d="m 23.41599,13.668986 c -0.24551,-0.06138 -0.49103,0 -0.70585,0.153447 -0.79793,0.675166 -1.71861,1.227575 -2.73136,1.595848 -0.95137,0.368272 -1.99481,0.552408 -3.09963,0.552408 -2.48583,0 -4.75685,-1.012749 -6.38338,-2.639286 C 8.8692296,11.704867 7.8564796,9.4338531 7.8564796,6.9480141 c 0,-1.043439 0.18414,-2.056188 0.49103,-2.976869 0.33758,-0.98206 0.82861,-1.872052 1.47309,-2.639286 C 10.0968,0.99427611 10.03542,0.50324611 9.6978396,0.22704111 c -0.21482,-0.153447 -0.46034,-0.214825 -0.70585,-0.153447 -2.6086,0.705856 -4.87961,2.27101399 -6.50615,4.35789099 C 0.92067962,6.4876731 -3.791132e-7,9.0348911 -3.791132e-7,11.796935 c 0,3.345141 1.3503299791132,6.383389 3.5599699791132,8.593024 2.20963,2.209635 5.21719,3.559967 8.5930204,3.559967 2.82342,0 5.43202,-0.98206 7.5189,-2.608597 2.11756,-1.657226 3.65203,-4.020307 4.29651,-6.720972 0.12276,-0.429651 -0.12276,-0.859303 -0.55241,-0.951371 z"/></svg>`));
@@ -303,17 +311,14 @@
 				sidebarFooter.appendChild(themeSwitch);
 				
 				for (const data of sections) {
-					const item = createElement(data.section == "Header" ? `<div class="sidebar-header">${data.header}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (data.renderSection) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
 						items.push(item);
 						item.addEventListener("click", _ => {
 							if (selectedSection == data.section) return;
-							while (content.childElementCount) content.firstElementChild.remove();
-							let sectionElements = [data.renderSection()].flat(10).filter(n => n);
-							for (let element of sectionElements) content.appendChild(element);
+							renderContent(data);
 							for (let i of items) i.classList.remove("selected");
 							item.classList.add("selected");
-							selectedSection = data.section;
 						});
 					}
 					sidebar.appendChild(item);

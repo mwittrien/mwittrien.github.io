@@ -243,7 +243,7 @@
 	min-height: 100%;
 }
 
-.sidebar-header,
+.sidebar-title,
 .sidebar-item {
 	flex-shrink: 0;
 	font-weight: 500;
@@ -252,7 +252,7 @@
 	overflow: hidden;
 	padding: 6px 10px;
 }
-.sidebar-header {
+.sidebar-title {
 	color: var(--channels-default);
 	font-size: 12px;
 	font-weight: 700;
