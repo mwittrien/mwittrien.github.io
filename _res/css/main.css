@@ -197,18 +197,27 @@
 	flex-direction: row;
 	align-items: flex-start;
 }
-.sidebar {
-	flex-direction: column;
-	padding: 60px 6px 60px 20px;
-}
-.sidebar-footer {
-	padding: 0 6px 0 20px;
-}
 .sidebar,
+.sidebar-header,
 .sidebar-footer {
 	display: flex;
-	flex: 1;
 	width: 140px;
+}
+.sidebar {
+	flex: 1 1 auto;
+	flex-direction: column;
+	padding: 10px 6px 10px 20px;
+}
+.sidebar-header,
+.sidebar-footer {
+	flex: 0 1 auto;
+	padding: 20px 6px 20px 20px;
+}
+.sidebar-header {
+	align-items: flex-start;
+}
+.sidebar-footer {
+	align-items: flex-end;
 }
 .content-region {
 	display: flex;
