@@ -149,23 +149,30 @@
 					let list = createElement(`<div></div>`);
 					list.appendChild(createSpinner(true));
 					
-					const xhttp = new XMLHttpRequest();
-					xhttp.onload = function() {
-						if (!document.contains(list)) return;
+					const parseResponse = response => {
 						try {
 							while (list.childElementCount) list.firstElementChild.remove();
 							list.classList.add("addon-list");
-							let children = [getChildren(this.response)].flat(10).filter(n => n);
+							let children = [getChildren(response)].flat(10).filter(n => n);
 							for (let child of children) list.appendChild(child);
 							header.innerText = typeof getHeader == "function" ? getHeader(children.length) : getHeader;
 						}
 						catch (err) {console.error("Error:", err);}
 					};
-					xhttp.open("GET", url);
-					xhttp.send();
+					if (createLoadingList.cache[url]) parseResponse(createLoadingList.cache[url]);
+					else {
+						const xhttp = new XMLHttpRequest();
+						xhttp.onload = function() {
+							createLoadingList.cache[url] = this.response;
+							parseResponse(this.response);
+						};
+						xhttp.open("GET", url);
+						xhttp.send();
+					}
 					
 					return [header, list];
 				};
+				createLoadingList.cache = {};
 				const createAddonList = (type, ending) => {
 					return createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`, amount => `${type} - ${amount}`, response => {
 						return response.split("- [").splice(1).map(n => {
