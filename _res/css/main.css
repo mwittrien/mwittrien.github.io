@@ -343,7 +343,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	background: url(./_res/imgs/cardplaceholder.svg) center/cover no-repeat;
+	background: url(https://mwittrien.github.io/_res/imgs/cardplaceholder.svg) center/cover no-repeat;
 	transform: scale(1);
 	transition: transform .2s ease-out;
 }
