@@ -33,8 +33,8 @@
 				
 				const appendModal = (...children) => {
 					let modals = document.querySelector(".modals");
-					if (!modals) return;
 					const modalChildren = [children].flat(10);
+					if (!modals || !modalChildren.length) return;
 					
 					const wrapper = createElement(`<div class="modal-wrapper"><div class="backdrop"></div></div>`);
 					const backdrop = wrapper.querySelector(".backdrop");
@@ -279,7 +279,7 @@
 										}
 										else checkCoverUrl();
 									};
-									xhttp.open("GET",url);
+									xhttp.open("GET", url);
 									xhttp.send();
 								}
 							};
@@ -294,7 +294,10 @@
 							createAddonCard.cache[addon.resourceUrl].screenshots.urls.push(`${addon.resourceUrl}/screenshot1.png`);
 							headerEle.addEventListener("click", _ => {
 								const openScreenshots = _ => {
+									const appMount = document.querySelector(".app-mount");
+									
 									const urls = [createAddonCard.cache[addon.resourceUrl].cover && createAddonCard.cache[addon.resourceUrl].cover.url, createAddonCard.cache[addon.resourceUrl].screenshots.urls].flat(10).filter(n => n);
+									const images = {};
 									
 									const imageModal = createElement(`<div class="screenshots">
 										<div class="screenshot previous"><img src="" alt=""></div>
@@ -306,19 +309,43 @@
 									const next = imageModal.querySelector(".next");
 									
 									let i = 0;
-									const setImages = _ => {
-										toggleElement(previous, urls[i-1]);
-										previous.firstElementChild.src = urls[i-1];
-										
-										current.firstElementChild.src = urls[i];
-										
-										toggleElement(next, urls[i+1]);
-										next.firstElementChild.src = urls[i+1];
+									const switchImages = _ => {
+										loadImage(previous, urls[i-1]);
+										loadImage(current, urls[i]);
+										loadImage(next, urls[i+1]);
+									};
+									const loadImage = (screenshot, url) => {
+										toggleElement(screenshot, url);
+										if (url) {
+											if (images[url]) setImage(screenshot, url);
+											else {
+												let img = new Image();
+												img.onload = function() {
+													images[url] = {width: this.width, height: this.height};
+													setImage(screenshot, url);
+												};
+												img.src = url;
+											}
+										}
+										else {
+											screenshot.style.removeProperty("width");
+											screenshot.style.removeProperty("height");
+											screenshot.firstElementChild.src = "";
+										}
+									};
+									const setImage = (screenshot, url) => {
+										const aRects = getRects(appMount);
+										const ratio = Math.min(1, (aRects.width * 0.8 - 20) / images[url].width, (aRects.height - 100) / images[url].height);
+										const width = Math.round(ratio * images[url].width);
+										const height = Math.round(ratio * images[url].height);
+										screenshot.style.setProperty("width", `${width}px`);
+										screenshot.style.setProperty("height", `${height}px`);
+										screenshot.firstElementChild.src = url;
 									};
 									
-									previous.addEventListener("click", setImages(--i));
-									next.addEventListener("click", setImages(++i));
-									setImages(i);
+									previous.addEventListener("click", _ => switchImages(--i));
+									next.addEventListener("click", _ => switchImages(++i));
+									switchImages();
 									appendModal(imageModal);
 								};
 								if (createAddonCard.cache[addon.resourceUrl].screenshots.fetched) openScreenshots();
