@@ -5,12 +5,15 @@
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/main.css"></link>
 		<script src="https://mwittrien.github.io/downloader/downloader.js"></script>
 		<style>
-			@font-face {
-				font-family: Discord;
-				src: url(https://mwittrien.github.io/_res/fonts/Discord.woff) format("woff");
-			}
 			.logo {
 				font-family: Discord;
+			}
+			.logo .primary {
+				color: var(--blurple);
+				font-size: 10px;
+			}
+			.logo .secondary {
+				font-size: 20px;
 			}
 		</style>
 		<script>
@@ -458,7 +461,7 @@
 				};
 				renderContent(sections.find(data => data.section != "Title" && data.section != "Separator"));
 				
-				sidebarHeader.appendChild(createElement(`<div class="logo"><div style="color: var(--blurple);">Better</div><div>Discord</div></div>`));
+				sidebarHeader.appendChild(createElement(`<div class="logo"><div class="primary">Better</div><div class="secondary">Discord</div></div>`));
 				
 				const changeTheme = value => {
 					for (let element of document.querySelectorAll(".theme-dark, .theme-light")) {
