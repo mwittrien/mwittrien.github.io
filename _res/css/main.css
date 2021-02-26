@@ -50,6 +50,24 @@
 	background-color: var(--background-primary);
 }
 
+.modals {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: none;
+	pointer-events: none;
+	z-index: 1002;
+}
+.modal-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+}
 .backdrop {
 	position: absolute;
 	top: 0;
@@ -58,15 +76,27 @@
 	bottom: 0;
 	background: rgba(0, 0, 0, 0.8);
 	pointer-events: none;
-	z-index: 1000;
 }
-.modal-wrapper {
+.modal {
+	pointer-events: auto;
+}
+
+.layer-items {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 1001;
+	background: none;
+	pointer-events: none;
+	z-index: 1003;
+}
+.layer-item {
+	position: absolute;
+	pointer-events: auto;
+}
+.layer-item-disabled {
+	pointer-events: none;
 }
 
 @keyframes spinner-animation {
@@ -579,24 +609,6 @@
 .switch-disabled {
 	opacity: 0.3;
 	cursor: not-allowed;
-}
-
-.layer-items {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: none;
-	pointer-events: none;
-	z-index: 1002;
-}
-.layer-item {
-	position: absolute;
-	pointer-events: auto;
-}
-.layer-item-disabled {
-	pointer-events: none;
 }
 
 .tooltip {
