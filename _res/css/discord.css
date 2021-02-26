@@ -217,7 +217,7 @@ code {
 
 @font-face {
 	font-family: Discord;
-	src: url(https://mwittrien.github.io/_res/fonts/Discord.otf) format("otf");
+	src: url(https://mwittrien.github.io/_res/fonts/Discord.otf);
 }
 @font-face {
 	font-family: Whitney;
