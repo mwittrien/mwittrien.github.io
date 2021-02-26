@@ -216,6 +216,10 @@ code {
 }
 
 @font-face {
+	font-family: Discord;
+	src: url(https://mwittrien.github.io/_res/fonts/Discord.otf) format("otf");
+}
+@font-face {
 	font-family: Whitney;
 	font-weight: 300;
 	src: url(https://mwittrien.github.io/_res/fonts/Whitney300.woff) format("woff");
