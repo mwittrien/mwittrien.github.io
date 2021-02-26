@@ -228,7 +228,7 @@
 	box-sizing: border-box;
 }
 .sidebar-region {
-	flex: 1 0 140px;
+	flex: 1 0 210px;
 	z-index: 1;
 	background-color: var(--background-secondary);
 }
@@ -247,7 +247,7 @@
 .sidebar-header,
 .sidebar-footer {
 	display: flex;
-	width: 140px;
+	width: 210px;
 }
 .sidebar {
 	flex: 1 1 auto;
