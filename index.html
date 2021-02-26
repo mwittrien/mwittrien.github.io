@@ -36,12 +36,11 @@
 					if (!modals) return;
 					const modalChildren = [children].flat(10);
 					
-					const wrapper = createElement(`<div class="modal-wrapper"><div class="backdrop"></div><div class="modal"></div></div>`);
+					const wrapper = createElement(`<div class="modal-wrapper"><div class="backdrop"></div></div>`);
 					const backdrop = wrapper.querySelector(".backdrop");
-					const modal = wrapper.querySelector(".modal");
 					
 					backdrop.addEventListener("click", _ => wrapper.remove());
-					for (let child of modalChildren) modal.appendChild(child);
+					for (let child of modalChildren) wrapper.appendChild(child);
 					modals.appendChild(wrapper);
 					return wrapper;
 				};
