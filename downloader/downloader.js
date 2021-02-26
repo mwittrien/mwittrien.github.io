@@ -5,6 +5,15 @@ window.DownloadApi = {
 		theme: arg => `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Themes/${arg}/${arg}.theme.css`,
 		url: arg => arg = arg.startsWith("https://") || arg.startsWith("http://") ? arg : `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/${arg}`
 	},
+	convert: (parameterString, error) => {
+		if (typeof parameterString == "string") for (let parameter in window.DownloadApi.converter) {
+			let arg = (parameterString.split(`?${parameter}=`)[1] || "").split("?")[0] || "";
+			if (arg) {
+				window.DownloadApi.download(window.DownloadApi.converter[parameter](arg), error);
+				break;
+			}
+		}
+	},
 	download: (url, error) => {
 		if (!url) return error && error("No URL!");
 		if (url.indexOf("raw.githubusercontent.com") == -1 && url.indexOf("github.io") == -1) return error && error(`<a href="${url}">${url}</a> not a valid GitHub File URL!`);
