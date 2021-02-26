@@ -208,7 +208,7 @@
 								resourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/_res`,
 								websiteUrl: `https://github.com/mwittrien/BetterDiscordAddons/tree/master/${type}/${fileName}`,
 								sourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/${fileName}${ending}`,
-								download: `${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`
+								download: `?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`
 							});
 						});
 					});
@@ -224,7 +224,7 @@
 							resourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/_res",
 							websiteUrl: "https://github.com/mwittrien/BetterDiscordAddons/tree/master/Library",
 							sourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/0${fileName}.plugin.js",
-							download: "library"
+							download: "?library"
 						});
 					});
 				};
