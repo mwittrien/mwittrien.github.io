@@ -743,6 +743,138 @@
 	cursor: not-allowed;
 }
 
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background: none;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	padding: 2px 16px;
+	width: auto;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
+	user-select: none;
+}
+.button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+.button-contents {
+	margin: 0 auto;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.button-size-tiny {
+	width: 52px;
+	height: 24px;
+	min-width: 52px;
+	min-height: 24px;
+}
+.button-size-small {
+	width: 60px;
+	height: 32px;
+	min-width: 60px;
+	min-height: 32px;
+}
+.button-size-medium {
+	width: 96px;
+	height: 38px;
+	min-width: 96px;
+	min-height: 38px;
+}
+.button-size-large {
+	width: 130px;
+	height: 44px;
+	min-width: 130px;
+	min-height: 44px;
+}
+.button-size-xlarge {
+	width: 148px;
+	height: 50px;
+	min-width: 148px;
+	min-height: 50px;
+	padding: 2px 20px;
+	font-size: 16px;
+	line-height: normal;
+}
+.button-size-min {
+	display: inline;
+	width: auto;
+	height: auto;
+	padding: 2px 4px;
+}
+.button-size-max {
+	width: 100%;
+	height: 100%;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 16px;
+}
+.button-brand {
+	background-color: var(--blurple);
+	color: #fff;
+}
+.button-brand:hover {
+	background-color: var(--blurple-hover);
+}
+.button-brand:active {
+	background-color: var(--blurple-active);
+}
+.button-brand:disabled {
+	background-color: var(--blurple);
+}
+.button-red {
+	background-color: var(--red);
+	color: #fff;
+}
+.button-red:hover {
+	background-color: var(--red-hover);
+}
+.button-red:active {
+	background-color: var(--red-active);
+}
+.button-red:disabled {
+	background-color: var(--red);
+}
+.button-green {
+	background-color: var(--green);
+	color: #fff;
+}
+.button-green:hover {
+	background-color: var(--green-hover);
+}
+.button-green:active {
+	background-color: var(--green-active);
+}
+.button-green:disabled {
+	background-color: var(--green);
+}
+.button-yellow {
+	background-color: var(--yellow);
+	color: #fff;
+}
+.button-yellow:hover {
+	background-color: var(--yellow-hover);
+}
+.button-yellow:active {
+	background-color: var(--yellow-active);
+}
+.button-yellow:disabled {
+	background-color: var(--yellow);
+}
+.button-blank {
+	background: transparent;
+	color: currentColor;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
 .tooltip {
 	box-shadow: var(--elevation-high);
 	color: var(--text-normal);

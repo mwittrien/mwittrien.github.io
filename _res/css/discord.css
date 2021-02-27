@@ -276,3 +276,7 @@ a, button, div, input, label, select, span, strong, textarea {
 img[alt] {
 	text-indent: -9999px;
 }
+
+button {
+	cursor: pointer;
+}
