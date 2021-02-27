@@ -147,16 +147,16 @@
 }
 .scroller.thin,
 .scroller.thin.fade:hover {
-	scrollbar-color: var(--scrollbar-thin-thumb) var(--scrollbar-thin-track);
+	scrollbar-color: var(--scrollbar-thin-thumb) transparent;
 }
 .scroller.thin::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 .scroller.thin::-webkit-scrollbar-track {
-	border-color: var(--scrollbar-thin-track);
-	background-color: var(--scrollbar-thin-track);
-	border: 2px solid var(--scrollbar-thin-track);
+	border-color: transparent;
+	background-color: transparent;
+	border: 2px solid transparent;
 }
 .scroller.thin::-webkit-scrollbar-thumb {
 	background-clip: padding-box;
@@ -171,8 +171,9 @@
 .scroller.auto {
 	scrollbar-width: auto;
 }
-.scroller.auto, .scroller.auto.fade:hover {
-	scrollbar-color: var(--scrollbar-auto-scrollbar-color-thumb) var(--scrollbar-auto-scrollbar-color-track);
+.scroller.auto,
+.scroller.auto.fade:hover {
+	scrollbar-color: var(--scrollbar-auto-thumb) var(--scrollbar-auto-track);
 }
 .scroller.auto::-webkit-scrollbar {
 	width: 16px;
@@ -192,6 +193,23 @@
 	min-height: 40px;
 }
 .scroller.auto::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller.dark,
+.scroller.dark.fade:hover {
+	scrollbar-color: var(--scrollbar-dark-thumb) var(--scrollbar-dark-track);
+}
+.scroller.dark::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-dark-track);
+}
+.scroller.dark::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-dark-thumb);
+}
+.scroller.thin.dark,
+.scroller.thin.dark.fade:hover {
+	scrollbar-color: var(--scrollbar-dark-thumb) transparent;
+}
+.scroller.thin.dark::-webkit-scrollbar-track {
 	background-color: transparent;
 }
 .scroller.none {
