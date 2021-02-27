@@ -21,7 +21,7 @@ window.DownloadApi = {
 		xhttp.onload = function() {
 			if (this.status == 200) {
 				const tempLink = document.createElement("a");
-				tempLink.href = window.URL.createObjectURL(new Blob([this.response], {type: url.split(".").pop()}));
+				tempLink.href = window.URL.createObjectURL(new Blob([this.response], {type: `text/${url.split(".").pop()}`}));
 				tempLink.download = url.split("/").pop();
 				tempLink.click();
 			}
