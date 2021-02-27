@@ -450,6 +450,79 @@
 	transform: rotate(0deg);
 }
 
+.invite {
+	background-color: var(--background-secondary);
+	border-radius: 4px;
+	box-sizing: border-box;
+	padding: 16px;
+	margin-bottom: 6px;
+	width: 432px;
+}
+.invite-header {
+	flex: 1;
+	color: var(--interactive-normal);
+	margin-bottom: 12px;
+	white-space: nowrap;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+	cursor: default;
+	overflow: hidden;
+}
+.invite-header:empty {
+	margin: 0;
+}
+.invite-content {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+.invite-icon {
+	flex: 0 0 auto;
+	background-color: var(--background-primary);
+	background-clip: padding-box;
+	background-position: 50%;
+	background-size: 100% 100%;
+	border-radius: 15px;
+	position: relative;
+	margin-right: 16px;
+	width: 50px;
+	height: 50px;
+}
+.invite-info {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+	min-width: 1px;
+}
+.invite-name {
+	color: var(--header-primary);
+	min-width: 0;
+	margin-bottom: 2px;
+	font-size: 16px;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.invite-details {
+	color: var(--interactive-normal);
+	font-size: 14px;
+	line-height: 16px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.invite-button {
+	height: 40px;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
 .addon-list-title {
 	flex: 1 1 auto;
 }
