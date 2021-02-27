@@ -245,12 +245,12 @@
 	background-color: var(--background-secondary);
 }
 .sidebar-region,
-.sidebar-region .scroller {
+.sidebar-scroller {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 }
-.sidebar-region .scroller {
+.sidebar-scroller {
 	flex: 1 0 auto;
 	flex-direction: row;
 	align-items: flex-start;
@@ -284,7 +284,7 @@
 	position: relative;
 	background-color: var(--background-primary);
 }
-.content-region .scroller {
+.content-scroller {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;

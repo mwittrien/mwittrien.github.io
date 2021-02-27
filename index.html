@@ -242,7 +242,7 @@
 							<div class="addon-title">
 								<div class="addon-name">${addon.name}</div>
 							</div>
-							<div class="addon-description">${addon.description}</div>
+							<div class="addon-description scroller fade">${addon.description}</div>
 							<div class="addon-controls">
 								<div class="addon-links"></div>
 								<div class="addon-buttons"></div>
@@ -259,6 +259,7 @@
 						
 						const addCover = _ => {
 							if (createAddonCard.cache[addon.resourceUrl].cover.status != 200 || !createAddonCard.cache[addon.resourceUrl].cover.url) return;
+							headerEle.classList.add("has-screenshots");
 							let coverWrapper = headerEle.querySelector(".addon-cover-wrapper");
 							while (coverWrapper.childElementCount) coverWrapper.firstElementChild.remove();
 							coverWrapper.appendChild(createElement(`<img class="addon-cover" src="${createAddonCard.cache[addon.resourceUrl].cover.url}" alt="">`));
@@ -286,111 +287,111 @@
 							checkCoverUrl();
 						}
 						
-						const addScreenshots = _ => {
+						const addScreenshotsButton = _ => {
 							if (createAddonCard.cache[addon.resourceUrl].screenshots.status != 200) return;
 							headerEle.appendChild(createElement(`<div class="addon-screenshots"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m 6.4994245,0.9996277 c -1.3780784,0 -2.5000823,1.122003 -2.5000823,2.500082 V 14.500072 c 0,1.378078 1.1220017,2.500082 2.5000823,2.500082 H 21.499917 C 22.877989,17.000154 24,15.878152 24,14.500072 V 3.4997097 c 0,-1.378078 -1.122,-2.500082 -2.500083,-2.500082 z m 0,2.000066 H 21.499917 c 0.27602,0 0.500006,0.223999 0.500006,0.500016 V 10.599553 L 18.841627,6.9119317 c -0.335019,-0.393022 -0.82081,-0.603254 -1.34184,-0.615254 -0.518029,0.003 -1.003965,0.232854 -1.335982,0.630879 l -3.713013,4.4591323 -1.210978,-1.207071 c -0.684039,-0.6840423 -1.7975092,-0.6840423 -2.4805497,0 L 5.999408,12.939473 V 3.4997097 c 0,-0.276015 0.224001,-0.500016 0.5000165,-0.500016 z m 2.5000822,1.000033 c -1.1030635,0 -2.0000658,0.897002 -2.0000658,2.000065 0,1.103064 0.8970023,2.000066 2.0000658,2.000066 1.1030633,0 2.0000653,-0.897002 2.0000653,-2.000066 0,-1.103063 -0.897002,-2.000065 -2.0000653,-2.000065 z M 2.4992929,7.9314967 0.07343181,16.029419 C -0.23858614,17.220487 0.4722125,18.45635 1.665281,18.785369 L 17.12868,22.92613 c 0.193009,0.04992 0.38618,0.07424 0.576192,0.07424 0.996058,0 1.907165,-0.660779 2.16218,-1.634827 l 0.90042,-2.865342 H 6.2494162 c -1.6010916,0 -3.0241024,-1.024778 -3.5411321,-2.550865 L 2.6731251,15.834092 C 2.5511162,15.430068 2.4992959,15.090089 2.4992959,14.750071 Z"/></svg></div>`));
 							headerEle.classList.add("has-screenshots");
-							
 							createAddonCard.cache[addon.resourceUrl].screenshots.urls.push(`${addon.resourceUrl}/screenshot1.png`);
-							headerEle.addEventListener("click", _ => {
-								const openScreenshots = _ => {
-									const appMount = document.querySelector(".app-mount");
-									
-									const urls = [...new Set([createAddonCard.cache[addon.resourceUrl].screenshots.urls].flat(10).filter(n => n))];
-									const images = {};
-									
-									const imageModal = createElement(`<div class="screenshots">
-										<div class="screenshot previous"><img src="" alt=""></div>
-										<div class="screenshot current"><img src="" alt=""></div>
-										<div class="screenshot next"><img src="" alt=""></div>
-									</div>`);
-									const previous = imageModal.querySelector(".previous");
-									const current = imageModal.querySelector(".current");
-									const next = imageModal.querySelector(".next");
-									
-									let i = 0;
-									const switchImages = _ => {
-										loadImage(previous, urls[i-1]);
-										loadImage(current, urls[i]);
-										loadImage(next, urls[i+1]);
-									};
-									const loadImage = (screenshot, url) => {
-										toggleElement(screenshot, url);
-										if (url) {
-											if (images[url]) setImage(screenshot, url);
-											else {
-												let loadingIcon = createSpinner(true);
-												let image =  screenshot.firstElementChild;
-												screenshot.appendChild(loadingIcon);
-												image.remove();
-												
-												let img = new Image();
-												img.onload = function() {
-													loadingIcon.remove();
-													screenshot.appendChild(image);
-													images[url] = {width: this.width, height: this.height};
-													setImage(screenshot, url);
-												};
-												img.src = url;
-											}
-										}
-										else {
-											screenshot.style.removeProperty("width");
-											screenshot.style.removeProperty("height");
-											screenshot.firstElementChild.src = "";
-										}
-									};
-									const setImage = (screenshot, url) => {
-										const aRects = getRects(appMount);
-										const ratio = Math.min(1, (aRects.width * 0.8 - 20) / images[url].width, (aRects.height - 100) / images[url].height);
-										const width = Math.round(ratio * images[url].width);
-										const height = Math.round(ratio * images[url].height);
-										screenshot.style.setProperty("width", `${width}px`);
-										screenshot.style.setProperty("height", `${height}px`);
-										screenshot.firstElementChild.src = url;
-									};
-									
-									previous.addEventListener("click", _ => switchImages(--i));
-									next.addEventListener("click", _ => switchImages(++i));
-									switchImages();
-									appendModal(imageModal);
-								};
-								if (createAddonCard.cache[addon.resourceUrl].screenshots.fetched) openScreenshots();
-								else {
-									const loadingScreen = appendModal(createSpinner(true));
-									let i = 2;
-									const loadScreenshot = _ => {
-										const xhttp = new XMLHttpRequest();
-										const url = `${addon.resourceUrl}/screenshot${i++}.png`;
-										xhttp.onload = function() {
-											if (this.status == 200) {
-												createAddonCard.cache[addon.resourceUrl].screenshots.urls.push(url);
-												loadScreenshot();
-											}
-											else {
-												createAddonCard.cache[addon.resourceUrl].screenshots.fetched = true;
-												loadingScreen.remove();
-												openScreenshots();
-											}
-										};
-										xhttp.open("GET", url);
-										xhttp.send();
-									};
-									loadScreenshot();
-								}
-							});
 						};
-						if (createAddonCard.cache[addon.resourceUrl].screenshots) addScreenshots();
+						if (createAddonCard.cache[addon.resourceUrl].screenshots) addScreenshotsButton();
 						else {
 							const xhttp = new XMLHttpRequest();
 							const url = `${addon.resourceUrl}/screenshot1.png`;
 							xhttp.onload = function() {
 								createAddonCard.cache[addon.resourceUrl].screenshots = {status: this.status, fetched: false, urls: []};
-								if (document.contains(headerEle)) addScreenshots();
+								if (document.contains(headerEle)) addScreenshotsButton();
 							};
 							xhttp.open("GET", url);
 							xhttp.send();
 						}
+						
+						headerEle.addEventListener("click", _ => {
+							if (!createAddonCard.cache[addon.resourceUrl].cover || !createAddonCard.cache[addon.resourceUrl].screenshots || !createAddonCard.cache[addon.resourceUrl].cover.url && !createAddonCard.cache[addon.resourceUrl].screenshots.urls.length) return;
+							const appMount = document.querySelector(".app-mount");
+							const openScreenshots = _ => {
+								const urls = [...new Set([createAddonCard.cache[addon.resourceUrl].cover.url, createAddonCard.cache[addon.resourceUrl].screenshots.urls].flat(10).filter(n => n))];
+								const images = {};
+								
+								const imageModal = createElement(`<div class="screenshots">
+									<div class="screenshot previous"><img src="" alt=""></div>
+									<div class="screenshot current"><img src="" alt=""></div>
+									<div class="screenshot next"><img src="" alt=""></div>
+								</div>`);
+								const previous = imageModal.querySelector(".previous");
+								const current = imageModal.querySelector(".current");
+								const next = imageModal.querySelector(".next");
+								
+								let i = 0;
+								const switchImages = _ => {
+									loadImage(previous, urls[i-1]);
+									loadImage(current, urls[i]);
+									loadImage(next, urls[i+1]);
+								};
+								const loadImage = (screenshot, url) => {
+									toggleElement(screenshot, url);
+									if (url) {
+										if (images[url]) setImage(screenshot, url);
+										else {
+											let loadingIcon = createSpinner(true);
+											let image =  screenshot.firstElementChild;
+											screenshot.appendChild(loadingIcon);
+											image.remove();
+											
+											let img = new Image();
+											img.onload = function() {
+												loadingIcon.remove();
+												screenshot.appendChild(image);
+												images[url] = {width: this.width, height: this.height};
+												setImage(screenshot, url);
+											};
+											img.src = url;
+										}
+									}
+									else {
+										screenshot.style.removeProperty("width");
+										screenshot.style.removeProperty("height");
+										screenshot.firstElementChild.src = "";
+									}
+								};
+								const setImage = (screenshot, url) => {
+									const aRects = getRects(appMount);
+									const ratio = Math.min(1, (aRects.width * 0.8 - 20) / images[url].width, (aRects.height - 100) / images[url].height);
+									const width = Math.round(ratio * images[url].width);
+									const height = Math.round(ratio * images[url].height);
+									screenshot.style.setProperty("width", `${width}px`);
+									screenshot.style.setProperty("height", `${height}px`);
+									screenshot.firstElementChild.src = url;
+								};
+								
+								previous.addEventListener("click", _ => switchImages(--i));
+								next.addEventListener("click", _ => switchImages(++i));
+								switchImages();
+								appendModal(imageModal);
+							};
+							if (createAddonCard.cache[addon.resourceUrl].screenshots.fetched) openScreenshots();
+							else {
+								const loadingScreen = appendModal(createSpinner(true));
+								let i = 2;
+								const loadScreenshot = _ => {
+									const xhttp = new XMLHttpRequest();
+									const url = `${addon.resourceUrl}/screenshot${i++}.png`;
+									xhttp.onload = function() {
+										if (this.status == 200) {
+											createAddonCard.cache[addon.resourceUrl].screenshots.urls.push(url);
+											loadScreenshot();
+										}
+										else {
+											createAddonCard.cache[addon.resourceUrl].screenshots.fetched = true;
+											loadingScreen.remove();
+											openScreenshots();
+										}
+									};
+									xhttp.open("GET", url);
+									xhttp.send();
+								};
+								loadScreenshot();
+							}
+						});
 					}
 					
 					let links = [], buttons = [];
@@ -495,13 +496,13 @@
 							<div class="sidebar-view">
 								<div class="sidebar-region">
 									<div class="sidebar-header"></div>
-									<div class="scroller fade">
+									<div class="sidebar-scroller scroller fade">
 										<div class="sidebar"></div>
 									</div>
 									<div class="sidebar-footer"></div>
 								</div>
 								<div class="content-region">
-									<div class="scroller auto">
+									<div class="content-scroller scroller auto">
 										<div class="content"></div>
 									</div>
 								</div>
