@@ -4,6 +4,8 @@
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/discord.css"></link>
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/main.css"></link>
 		<script src="https://mwittrien.github.io/downloader/downloader.js"></script>
+		<style>
+		</style>
 		<script>
 			window.onload = function () {
 				const getRects = node => {
@@ -167,17 +169,22 @@
 				};
 				
 				const createLoadingList = (url, getHeader, getChildren) => {
-					let header = createElement(`<div class="header">${typeof getHeader == "function" ? getHeader(0) : getHeader}</div>`);
+					let header = createElement(`<div class="header"></div>`);
 					let list = createElement(`<div></div>`);
 					list.appendChild(createSpinner(true));
-					
+					const setHeader = _ => {
+						while (header.childElementCount) header.firstElementChild.remove();
+						let headerChildren = [typeof getHeader == "function" ? getHeader(0) : getHeader].flat(10).filter(n => n);
+						for (let child of headerChildren) header.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
+					};
+					setHeader();
 					const parseResponse = response => {
 						try {
-							while (list.childElementCount) list.firstElementChild.remove();
 							list.classList.add("addon-list");
+							while (list.childElementCount) list.firstElementChild.remove();
 							let children = [getChildren(response)].flat(10).filter(n => n);
-							for (let child of children) list.appendChild(child);
-							header.innerText = typeof getHeader == "function" ? getHeader(children.length) : getHeader;
+							for (let child of children) list.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
+							setHeader();
 						}
 						catch (err) {console.error("Error:", err);}
 					};
@@ -196,23 +203,63 @@
 				};
 				createLoadingList.cache = {};
 				const createAddonList = (type, ending) => {
-					return createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`, amount => `${type} - ${amount}`, response => {
-						return response.split("- [").splice(1).map(n => {
+					return createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`,
+						amount => {
+							const search = createElement(`<div class="addon-list-search search">
+								<div class="search-inner">
+									<input class="search-input" placeholder="Search" value="">
+									<div class="search-icon-layout" tabindex="-1" role="button">
+										<div class="search-icon-container">
+											<svg class="search-icon search-icon-mag" aria-label="Search" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.707 20.293L16.314 14.9C17.403 13.504 18 11.799 18 10C18 7.863 17.167 5.854 15.656 4.344C14.146 2.832 12.137 2 10 2C7.863 2 5.854 2.832 4.344 4.344C2.833 5.854 2 7.863 2 10C2 12.137 2.833 14.146 4.344 15.656C5.854 17.168 7.863 18 10 18C11.799 18 13.504 17.404 14.9 16.314L20.293 21.706L21.707 20.293ZM10 16C8.397 16 6.891 15.376 5.758 14.243C4.624 13.11 4 11.603 4 10C4 8.398 4.624 6.891 5.758 5.758C6.891 4.624 8.397 4 10 4C11.603 4 13.109 4.624 14.242 5.758C15.376 6.891 16 8.398 16 10C16 11.603 15.376 13.11 14.242 14.243C13.109 15.376 11.603 16 10 16Z"/></svg>
+											<svg class="search-icon search-icon-clear" aria-label="Close" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
+										</div>
+									</div>
+								</div>
+							</div>`);
+							const input = search.querySelector(".search-input");
+							const icon = search.querySelector(".search-icon-layout");
+							const mag = search.querySelector(".search-icon-mag");
+							const clear = search.querySelector(".search-icon-clear");
+							const updateSearch = newSearch => {
+								if (newSearch !== undefined) {
+									createAddonList.search[type] = newSearch;
+									input.value = newSearch;
+								}
+								let hasSearch = createAddonList.search[type] && createAddonList.search[type].length > 0;
+								icon.classList[hasSearch ? "add" : "remove"]("search-icon-layout-clear");
+								mag.classList[!hasSearch ? "add" : "remove"]("search-icon-visibile");
+								clear.classList[hasSearch ? "add" : "remove"]("search-icon-visibile");
+							};
+							let timeout;
+							input.addEventListener("input", _ => {
+								clearTimeout(timeout);
+								timeout = setTimeout(_ => updateSearch(input.value));
+							});
+							clear.addEventListener("click", _ => {
+								updateSearch("");
+							});
+							updateSearch();
+							return [createElement(`<div class="addon-list-title">${type} - ${amount}</div>`), search];
+						},
+						response => response.split("- [").splice(1).map(n => {
 							let m = n.split("](");
 							let l = m[1].split(") - ");
 							let fileName = l[0].split("/").pop();
-							return createAddonCard({
-								name: (m[0] || "").trim(),
-								description: (l[1] || "").trim(),
+							let name = (m[0] || "").trim();
+							let description = (l[1] || "").trim();
+							return name && (!createAddonList.search[type] || [name, description].filter(n => n).some(s => s.toLowerCase().indexOf(createAddonList.search[type].toLowerCase()) > -1)) && createAddonCard({
+								name: name,
+								description: description,
 								icon: `<svg width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="${type == "Plugins" ? "m 11.470703,0.625 c -1.314284,0 -2.3808593,1.0666594 -2.3808592,2.3808594 V 4.4335938 H 5.2792969 c -1.0476168,0 -1.8945313,0.85855 -1.8945313,1.90625 v 3.6191406 h 1.4179688 c 1.41905,0 2.5722656,1.1512126 2.5722656,2.5703126 0,1.4191 -1.1532156,2.572266 -2.5722656,2.572265 H 3.375 v 3.619141 c 0,1.0477 0.8566801,1.904297 1.9042969,1.904297 h 3.6191406 v -1.427734 c 0,-1.4189 1.1532235,-2.572266 2.5722655,-2.572266 1.41905,0 2.570313,1.153366 2.570313,2.572266 V 20.625 h 3.61914 c 1.047626,0 1.90625,-0.856597 1.90625,-1.904297 v -3.810547 h 1.427735 c 1.314292,0 2.380859,-1.066559 2.380859,-2.380859 0,-1.3143 -1.066567,-2.38086 -2.380859,-2.380859 H 19.566406 V 6.3398438 c 0,-1.0477002 -0.858624,-1.90625 -1.90625,-1.90625 H 13.851562 V 3.0058594 c 0,-1.3142 -1.066568,-2.3808594 -2.380859,-2.3808594 z" : "m 14.69524,1.9999881 c -0.17256,0 -0.34519,0.065 -0.47686,0.1969 L 8.8655531,7.5498683 16.449675,15.134198 21.802502,9.7812182 c 0.26333,-0.2633 0.26333,-0.6904 0,-0.9537 L 20.7902,7.8168183 c -0.22885,-0.2289 -0.58842,-0.2633 -0.85606,-0.081 l -2.127134,1.4452499 1.437076,-2.1418399 c 0.17949,-0.2675 0.14486,-0.6251001 -0.083,-0.8528001 l -2.195488,-2.19433 c -0.20264,-0.2026 -0.51169,-0.2562 -0.7698,-0.1318 l -0.37921,0.1839 0.18228,-0.4036001 c 0.11521,-0.2555 0.0599,-0.5553 -0.13834,-0.7535 l -0.68843,-0.6901 c -0.131639,-0.13172 -0.30429,-0.19701 -0.476854,-0.19701 z M 7.8695308,8.5459582 6.3201566,10.095378 c -0.126449,0.1264 -0.196927,0.298 -0.196927,0.4769 0,0.1788 0.07043,0.3505 0.196927,0.4769 l 1.469627,1.46967 c 0.283151,0.2832 0.421272,0.6744 0.377578,1.07255 -0.04365,0.3979 -0.264001,0.7495 -0.602173,0.9651 -4.3184212,2.75283 -4.720939,3.15533 -4.853187,3.28763 -0.9493352,0.9493 -0.9493352,2.494471 0,3.443871 0.9502793,0.9503 2.4954759,0.9484 3.4437772,0 0.132338,-0.1323 0.534965,-0.535 3.2875378,-4.853321 0.215049,-0.3374 0.5670574,-0.5568 0.9651044,-0.6006 0.399307,-0.044 0.790042,0.094 1.072518,0.376 l 1.469626,1.46967 c 0.26328,0.2633 0.69043,0.2633 0.95371,0 l 1.549374,-1.54942 z M 4.4762059,18.571608 c 0.243902,0 0.487705,0.092 0.673783,0.2783 0.3722,0.3722 0.3722,0.975401 0,1.347601 -0.3722,0.3722 -0.97541,0.3722 -1.3475649,0 -0.3722,-0.3722 -0.3722,-0.975401 0,-1.347601 0.1861,-0.1861 0.42988,-0.2783 0.6737819,-0.2783 z"}"/></svg>`,
 								resourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/_res`,
 								websiteUrl: `https://github.com/mwittrien/BetterDiscordAddons/tree/master/${type}/${fileName}`,
 								sourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/${fileName}${ending}`,
 								download: `?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`
 							});
-						});
-					});
+						}).filter(n => n)
+					);
 				};
+				createAddonList.search = {};
 				const createLibraryEntry = _ => {
 					return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", "Required Library", response => {
 						let parsedResponse = response.trim().replace(/\r/g, "");
@@ -470,97 +517,6 @@
 				}), themeSwitch.firstElementChild.nextSibling);
 				sidebarFooter.appendChild(themeSwitch);
 				
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
-				for (const data of sections) {
-					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
-					if (typeof data.renderSection == "function") {
-						items.push(item);
-						item.addEventListener("click", _ => {
-							if (selectedSection == data.section) return;
-							renderContent(data);
-							for (let i of items) i.classList.remove("selected");
-							item.classList.add("selected");
-						});
-					}
-					sidebar.appendChild(item);
-				}
 				for (const data of sections) {
 					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
 					if (typeof data.renderSection == "function") {
