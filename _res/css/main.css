@@ -140,7 +140,7 @@
 	position: relative;
 	box-sizing: border-box;
 	min-height: 0;
-	overflow: hidden scroller;
+	overflow: hidden scroll !important;
 }
 .scroller.thin {
 	scrollbar-width: thin;
@@ -291,7 +291,6 @@
 	align-items: flex-start;
 	position: static;
 	height: 100%;
-	overflow-x: hidden;
 }
 .content {
 	flex: 1 1 auto;
