@@ -494,7 +494,6 @@
 	display: flex;
 	flex: 1 1 auto;
 	color: var(--header-secondary);
-	overflow: hidden;
 	margin: 4px 0 16px;
 	font-size: 14px;
 	line-height: 18px;
