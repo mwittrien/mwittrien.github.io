@@ -4,8 +4,6 @@
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/discord.css"></link>
 		<link type="text/css" rel="stylesheet" href="https://mwittrien.github.io/_res/css/main.css"></link>
 		<script src="https://mwittrien.github.io/downloader/downloader.js"></script>
-		<style>
-		</style>
 		<script>
 			window.onload = function () {
 				const getRects = node => {
@@ -168,32 +166,36 @@
 					return itemLayer;
 				};
 				
-				const createLoadingList = (url, getHeader, getChildren) => {
-					let header = createElement(`<div class="header"></div>`);
-					let list = createElement(`<div></div>`);
-					list.appendChild(createSpinner(true));
-					const setHeader = _ => {
+				const createLoadingList = (url, config = {}) => {
+					const header = createElement(`<div class="header"></div>`);
+					const list = createElement(`<div></div>`);
+					header.update = amount => {
 						while (header.childElementCount) header.firstElementChild.remove();
-						let headerChildren = [typeof getHeader == "function" ? getHeader(0) : getHeader].flat(10).filter(n => n);
-						for (let child of headerChildren) header.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
+						const children = [typeof config.getHeader == "function" ? config.getHeader(amount) : config.getHeader].flat(10).filter(n => n);
+						for (const child of children) header.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
+						let input = header.querySelector("input");
+						if (input) input.focus();
 					};
-					setHeader();
-					const parseResponse = response => {
+					list.update = _ => {
 						try {
-							list.classList.add("addon-list");
+							if (config.className) list.classList.add(config.className);
 							while (list.childElementCount) list.firstElementChild.remove();
-							let children = [getChildren(response)].flat(10).filter(n => n);
-							for (let child of children) list.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
-							setHeader();
+							const children = [typeof config.getChildren == "function" ? config.getChildren(createLoadingList.cache[url]) : config.getChildren].flat(10).filter(n => n);
+							for (const child of children) list.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
+							header.update(children.length);
 						}
 						catch (err) {console.error("Error:", err);}
 					};
-					if (createLoadingList.cache[url]) parseResponse(createLoadingList.cache[url]);
+					
+					list.appendChild(createSpinner(true));
+					header.update(0);
+					
+					if (createLoadingList.cache[url]) list.update();
 					else {
 						const xhttp = new XMLHttpRequest();
 						xhttp.onload = function() {
 							createLoadingList.cache[url] = this.response;
-							parseResponse(this.response);
+							list.update();
 						};
 						xhttp.open("GET", url);
 						xhttp.send();
@@ -203,8 +205,9 @@
 				};
 				createLoadingList.cache = {};
 				const createAddonList = (type, ending) => {
-					return createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`,
-						amount => {
+					let [header, list] = createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`, {
+						className: "addon-list",
+						getHeader: amount => {
 							const search = createElement(`<div class="addon-list-search search">
 								<div class="search-inner">
 									<input class="search-input" placeholder="Search" value="">
@@ -220,10 +223,14 @@
 							const icon = search.querySelector(".search-icon-layout");
 							const mag = search.querySelector(".search-icon-mag");
 							const clear = search.querySelector(".search-icon-clear");
+							
+							input.value = createAddonList.search[type] || "";
+							
 							const updateSearch = newSearch => {
 								if (newSearch !== undefined) {
 									createAddonList.search[type] = newSearch;
 									input.value = newSearch;
+									list.update();
 								}
 								let hasSearch = createAddonList.search[type] && createAddonList.search[type].length > 0;
 								icon.classList[hasSearch ? "add" : "remove"]("search-icon-layout-clear");
@@ -233,7 +240,7 @@
 							let timeout;
 							input.addEventListener("input", _ => {
 								clearTimeout(timeout);
-								timeout = setTimeout(_ => updateSearch(input.value));
+								timeout = setTimeout(_ => updateSearch(input.value), 1500);
 							});
 							clear.addEventListener("click", _ => {
 								updateSearch("");
@@ -241,7 +248,7 @@
 							updateSearch();
 							return [createElement(`<div class="addon-list-title">${type} - ${amount}</div>`), search];
 						},
-						response => response.split("- [").splice(1).map(n => {
+						getChildren: response => response.split("- [").splice(1).map(n => {
 							let m = n.split("](");
 							let l = m[1].split(") - ");
 							let fileName = l[0].split("/").pop();
@@ -257,22 +264,27 @@
 								download: `?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`
 							});
 						}).filter(n => n)
-					);
+					});
+					return [header, list];
 				};
 				createAddonList.search = {};
 				const createLibraryEntry = _ => {
-					return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", "Required Library", response => {
-						let parsedResponse = response.trim().replace(/\r/g, "");
-						let fileName = (parsedResponse.split(" -")[0] || "").replace("# ", "").trim();
-						return createAddonCard({
-							name: fileName,
-							description: (parsedResponse.split("\n").pop() || "").trim(),
-							icon: `<svg width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="m 7.3125,2.625 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 14.929687 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 2.710313,0 3.840547,1.498711 4.101563,1.914062 V 3.9905599 C 10.603047,3.3127865 9.3007813,2.625 7.3125,2.625 Z M 4.96875,3.796875 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 17.273437 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 h 5.30599 C 9.9465755,17.461602 9.0865625,16.6875 7.3125,16.6875 c -0.9692969,0 -1.7578125,-0.788516 -1.7578125,-1.757813 V 3.796875 Z m 9.375,0 c -0.662031,0 -1.266641,0.2287891 -1.757812,0.6005859 V 18.445312 c 0,-0.323281 0.262656,-0.585937 0.585937,-0.585937 h 5.859375 c 0.323868,0 0.585937,-0.26207 0.585937,-0.585938 V 4.3828125 c 0,-0.3238672 -0.262069,-0.5859375 -0.585937,-0.5859375 z M 2.5859375,4.96875 C 2.2620703,4.96875 2,5.2308203 2,5.5546875 V 19.617187 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 H 9.171224 c 0.2420313,0.68207 0.892995,1.171875 1.656901,1.171875 h 2.34375 c 0.763906,0 1.414831,-0.489805 1.656901,-1.171875 h 6.585286 C 21.73793,20.203125 22,19.941055 22,19.617187 V 5.5546875 C 22,5.2308203 21.73793,4.96875 21.414062,4.96875 h -0.585937 v 12.304687 c 0,0.969297 -0.827578,1.757813 -1.796875,1.757813 H 13.656901 C 13.41487,19.71332 12.763907,20.203125 12,20.203125 c -0.763906,0 -1.414831,-0.489805 -1.656901,-1.171875 H 4.96875 c -0.9692968,0 -1.796875,-0.788516 -1.796875,-1.757813 V 4.96875 Z"/></svg>`,
-							resourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/_res",
-							websiteUrl: "https://github.com/mwittrien/BetterDiscordAddons/tree/master/Library",
-							sourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/0${fileName}.plugin.js",
-							download: "?library"
-						});
+					return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", {
+						className: "addon-list",
+						getHeader: "Required Library",
+						getChildren: response => {
+							let parsedResponse = response.trim().replace(/\r/g, "");
+							let fileName = (parsedResponse.split(" -")[0] || "").replace("# ", "").trim();
+							return createAddonCard({
+								name: fileName,
+								description: (parsedResponse.split("\n").pop() || "").trim(),
+								icon: `<svg width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="m 7.3125,2.625 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 14.929687 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 2.710313,0 3.840547,1.498711 4.101563,1.914062 V 3.9905599 C 10.603047,3.3127865 9.3007813,2.625 7.3125,2.625 Z M 4.96875,3.796875 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 17.273437 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 h 5.30599 C 9.9465755,17.461602 9.0865625,16.6875 7.3125,16.6875 c -0.9692969,0 -1.7578125,-0.788516 -1.7578125,-1.757813 V 3.796875 Z m 9.375,0 c -0.662031,0 -1.266641,0.2287891 -1.757812,0.6005859 V 18.445312 c 0,-0.323281 0.262656,-0.585937 0.585937,-0.585937 h 5.859375 c 0.323868,0 0.585937,-0.26207 0.585937,-0.585938 V 4.3828125 c 0,-0.3238672 -0.262069,-0.5859375 -0.585937,-0.5859375 z M 2.5859375,4.96875 C 2.2620703,4.96875 2,5.2308203 2,5.5546875 V 19.617187 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 H 9.171224 c 0.2420313,0.68207 0.892995,1.171875 1.656901,1.171875 h 2.34375 c 0.763906,0 1.414831,-0.489805 1.656901,-1.171875 h 6.585286 C 21.73793,20.203125 22,19.941055 22,19.617187 V 5.5546875 C 22,5.2308203 21.73793,4.96875 21.414062,4.96875 h -0.585937 v 12.304687 c 0,0.969297 -0.827578,1.757813 -1.796875,1.757813 H 13.656901 C 13.41487,19.71332 12.763907,20.203125 12,20.203125 c -0.763906,0 -1.414831,-0.489805 -1.656901,-1.171875 H 4.96875 c -0.9692968,0 -1.796875,-0.788516 -1.796875,-1.757813 V 4.96875 Z"/></svg>`,
+								resourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/_res",
+								websiteUrl: "https://github.com/mwittrien/BetterDiscordAddons/tree/master/Library",
+								sourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/0${fileName}.plugin.js",
+								download: "?library"
+							});
+						}
 					});
 				};
 				const createAddonCard = addon => {
