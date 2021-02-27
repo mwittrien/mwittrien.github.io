@@ -241,17 +241,17 @@
 }
 .sidebar-region {
 	flex: 1 0 210px;
-	z-index: 1;
+	flex-direction: column;
 	background-color: var(--background-secondary);
+	z-index: 1;
 }
 .sidebar-region,
 .sidebar-scroller {
 	display: flex;
-	flex-direction: column;
 	justify-content: flex-end;
 }
 .sidebar-scroller {
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	flex-direction: row;
 	align-items: flex-start;
 }

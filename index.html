@@ -483,6 +483,97 @@
 					}
 					sidebar.appendChild(item);
 				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
+				for (const data of sections) {
+					const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
+					if (typeof data.renderSection == "function") {
+						items.push(item);
+						item.addEventListener("click", _ => {
+							if (selectedSection == data.section) return;
+							renderContent(data);
+							for (let i of items) i.classList.remove("selected");
+							item.classList.add("selected");
+						});
+					}
+					sidebar.appendChild(item);
+				}
 			};
 		</script>
 	</head>
