@@ -140,7 +140,7 @@
 	position: relative;
 	box-sizing: border-box;
 	min-height: 0;
-	overflow: hidden scroll !important;
+	overflow-x: hidden;
 }
 .scroller.thin {
 	scrollbar-width: thin;
