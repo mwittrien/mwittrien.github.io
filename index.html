@@ -26,9 +26,13 @@
 				cursor: default;
 				overflow: hidden;
 			}
+			.invite-header:empty {
+				margin: 0;
+			}
 			.invite-content {
 				display: flex;
 				flex-flow: row nowrap;
+				align-items: center;
 			}
 			.invite-icon {
 				flex: 0 0 auto;
@@ -129,20 +133,34 @@
 					return switchEle;
 				};
 				
+				const createButton = (config = {}) => {
+					const button = createElement(`<button type="button" class="${formatClassName(config.className, "button", config.color ? "button-" + config.color : "button-brand", config.size == "none" ? "" : (config.size ? "button-size-" + config.size : "button-size-small"))}">
+						<div class="button-contents">${config.contents}</div>
+					</button>`);
+					if (typeof config.onClick == "function") button.addEventListener("click", config.onClick);
+					return button;
+				};
+				
 				const createInvite = (data = {}) => {
-					return createElement(`<div class="invite">
-						<div class="invite-header">You've been invited to join a server</div>
+					const invite = createElement(`<div class="invite">
+						<div class="invite-header">${data.header || ""}</div>
 						<div class="invite-content">
 							<div class="invite-icon" tabindex="0" role="button" style="background-image: url(${data.icon});"></div>
 							<div class="invite-info">
-								<div class="invite-name">${data.name}</div>
-								<strong class="invite-details">${data.details}</strong>
+								<div class="invite-name">${data.name || ""}</div>
+								<strong class="invite-details">${data.details || ""}</strong>
 							</div>
-							<button type="button" class="invite-button button button-filled button-green button-grow">
-								<div class="button-contents">Join</div>
-							</button>
 						</div>
 					</div>`);
+					invite.querySelector(".invite-content").appendChild(createButton({
+						contents: "Join",
+						className: "invite-button",
+						color: "green",
+						size: "none",
+						onClick: _ => {
+						}
+					}));
+					return invite;
 				};
 				
 				const createTooltip = (anker, text, config = {}) => {
