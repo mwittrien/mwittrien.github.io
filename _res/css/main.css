@@ -604,9 +604,10 @@
 	transform: translateY(-1px);
 }
 .addon-header {
-	height: 143px;
-	position: relative;
 	display: block;
+	flex: 0 0 auto;
+	position: relative;
+	height: 143px;
 	overflow: visible;
 	margin-bottom: 32px;
 }
