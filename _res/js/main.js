@@ -23,14 +23,14 @@ window.onload = function () {
 	const formatClassName = (...classes) => {
 		return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
 	};
-	
+
 	const appendModal = (modal, config = {}) => {
 		let modals = document.querySelector(".modals");
 		if (!modals || !Node.prototype.isPrototypeOf(modal)) return;
-		
+
 		const wrapper = createElement(`<div class="modal-wrapper"><div class="backdrop"></div></div>`);
 		const backdrop = wrapper.querySelector(".backdrop");
-		
+
 		backdrop.addEventListener("click", _ => {
 			wrapper.remove();
 			if (typeof config.onClose == "function") config.onClose();
@@ -39,11 +39,11 @@ window.onload = function () {
 		modals.appendChild(wrapper);
 		return wrapper;
 	};
-	
+
 	const createSpinner = wrap => {
 		return createElement(`${wrap ? '<div class="spinner-container">' : ''}<span class="spinner"><span class="spinner-inner"><span class="spinner-item"></span><span class="spinner-item"></span></span></span>${wrap ? '</div>' : ''}`);
 	};
-	
+
 	const createSwitch = (config = {}) => {
 		const switchEle = createElement(`<div class="${formatClassName("switch", config.checked && "switch-checked", config.disabled && "switch-disabled")}"><input type="checkbox" class="switch-checkbox"></div>`);
 		switchEle.addEventListener("click", _ => {
@@ -53,7 +53,7 @@ window.onload = function () {
 		});
 		return switchEle;
 	};
-	
+
 	const createButton = (config = {}) => {
 		const button = createElement(`<button type="button" class="${formatClassName(config.className, "button", config.color ? "button-" + config.color : "button-brand", config.size == "none" ? "" : (config.size ? "button-size-" + config.size : "button-size-small"))}">
 			<div class="button-contents">${config.contents}</div>
@@ -61,7 +61,7 @@ window.onload = function () {
 		if (typeof config.onClick == "function") button.addEventListener("click", config.onClick);
 		return button;
 	};
-	
+
 	const createInvite = (data = {}) => {
 		const invite = createElement(`<div class="invite">
 			<div class="invite-header">${data.header || ""}</div>
@@ -84,7 +84,7 @@ window.onload = function () {
 		}));
 		return invite;
 	};
-	
+
 	const createTooltip = (anker, text, config = {}) => {
 		let itemLayerContainer = document.querySelector(".layer-items");
 		if (!itemLayerContainer) return;
@@ -95,11 +95,11 @@ window.onload = function () {
 			</div>
 		</div>`);
 		itemLayerContainer.appendChild(itemLayer);
-		
+
 		let tooltip = itemLayer.firstElementChild;
 		let tooltipContent = itemLayer.querySelector(".tooltip-content");
 		let tooltipPointer = itemLayer.querySelector(".tooltip-pointer");
-		
+
 		if (config.id) tooltip.id = config.id.split(" ").join("");
 		let type = config.type || "top";
 		tooltip.classList.add(`tooltip-${type}`);
@@ -112,13 +112,13 @@ window.onload = function () {
 		let mouseLeave = e => {itemLayer.removeTooltip();};
 		document.addEventListener("mousemove", mouseMove);
 		document.addEventListener("mouseleave", mouseLeave);
-		
+
 		let observer = new MutationObserver(changes => changes.forEach(change => {
 			let nodes = Array.from(change.removedNodes);
 			if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n => n.contains(anker))) itemLayer.removeTooltip();
 		}));
 		observer.observe(document.body, {subtree: true, childList: true});
-		
+
 		(tooltip.setText = itemLayer.setText = newText => {
 			if (config.html) tooltipContent.innerHTML = newText;
 			else tooltipContent.innerText = newText;
@@ -155,10 +155,10 @@ window.onload = function () {
 					left = tRects.left + tRects.width + positionOffsets.width - 2 + offset;
 					break;
 				}
-				
+
 			itemLayer.style.setProperty("top", `${top}px`, "important");
 			itemLayer.style.setProperty("left", `${left}px`, "important");
-			
+
 			tooltipPointer.style.removeProperty("margin-left");
 			tooltipPointer.style.removeProperty("margin-top");
 			if (type == "top" || type == "bottom") {
@@ -188,10 +188,10 @@ window.onload = function () {
 				}
 			}
 		})();
-		
+
 		return itemLayer;
 	};
-	
+
 	const createLoadingList = (url, config = {}) => {
 		const header = createElement(`<div class="header"></div>`);
 		const list = createElement(`<div></div>`);
@@ -215,10 +215,10 @@ window.onload = function () {
 			}
 			catch (err) {console.error("Error:", err);}
 		};
-		
+
 		list.appendChild(createSpinner(true));
 		header.update(0);
-		
+
 		if (createLoadingList.cache[url]) list.update();
 		else {
 			const xhttp = new XMLHttpRequest();
@@ -229,7 +229,7 @@ window.onload = function () {
 			xhttp.open("GET", url);
 			xhttp.send();
 		}
-		
+
 		return [header, list];
 	};
 	createLoadingList.cache = {};
@@ -252,9 +252,9 @@ window.onload = function () {
 				const icon = search.querySelector(".search-icon-layout");
 				const mag = search.querySelector(".search-icon-mag");
 				const clear = search.querySelector(".search-icon-clear");
-				
+
 				input.value = createAddonList.search[type] || "";
-				
+
 				const updateSearch = newSearch => {
 					if (newSearch !== undefined) {
 						createAddonList.search[type] = newSearch;
@@ -337,14 +337,14 @@ window.onload = function () {
 				</div>
 			</div>
 		</div>`);
-		
+
 		let headerEle = card.querySelector(".addon-header");
 		let linksEle = card.querySelector(".addon-links");
 		let buttonsEle = card.querySelector(".addon-buttons");
-		
+
 		if (addon.resourceUrl) {
 			if (!createAddonCard.cache[addon.resourceUrl]) createAddonCard.cache[addon.resourceUrl] = {};
-			
+
 			const addCover = _ => {
 				if (createAddonCard.cache[addon.resourceUrl].cover.status != 200 || !createAddonCard.cache[addon.resourceUrl].cover.url) return;
 				headerEle.classList.add("has-screenshots");
@@ -374,7 +374,7 @@ window.onload = function () {
 				};
 				checkCoverUrl();
 			}
-			
+
 			const addScreenshotsButton = _ => {
 				if (createAddonCard.cache[addon.resourceUrl].screenshots.status != 200) return;
 				headerEle.appendChild(createElement(`<div class="addon-screenshots"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m 6.4994245,0.9996277 c -1.3780784,0 -2.5000823,1.122003 -2.5000823,2.500082 V 14.500072 c 0,1.378078 1.1220017,2.500082 2.5000823,2.500082 H 21.499917 C 22.877989,17.000154 24,15.878152 24,14.500072 V 3.4997097 c 0,-1.378078 -1.122,-2.500082 -2.500083,-2.500082 z m 0,2.000066 H 21.499917 c 0.27602,0 0.500006,0.223999 0.500006,0.500016 V 10.599553 L 18.841627,6.9119317 c -0.335019,-0.393022 -0.82081,-0.603254 -1.34184,-0.615254 -0.518029,0.003 -1.003965,0.232854 -1.335982,0.630879 l -3.713013,4.4591323 -1.210978,-1.207071 c -0.684039,-0.6840423 -1.7975092,-0.6840423 -2.4805497,0 L 5.999408,12.939473 V 3.4997097 c 0,-0.276015 0.224001,-0.500016 0.5000165,-0.500016 z m 2.5000822,1.000033 c -1.1030635,0 -2.0000658,0.897002 -2.0000658,2.000065 0,1.103064 0.8970023,2.000066 2.0000658,2.000066 1.1030633,0 2.0000653,-0.897002 2.0000653,-2.000066 0,-1.103063 -0.897002,-2.000065 -2.0000653,-2.000065 z M 2.4992929,7.9314967 0.07343181,16.029419 C -0.23858614,17.220487 0.4722125,18.45635 1.665281,18.785369 L 17.12868,22.92613 c 0.193009,0.04992 0.38618,0.07424 0.576192,0.07424 0.996058,0 1.907165,-0.660779 2.16218,-1.634827 l 0.90042,-2.865342 H 6.2494162 c -1.6010916,0 -3.0241024,-1.024778 -3.5411321,-2.550865 L 2.6731251,15.834092 C 2.5511162,15.430068 2.4992959,15.090089 2.4992959,14.750071 Z"/></svg></div>`));
@@ -392,14 +392,14 @@ window.onload = function () {
 				xhttp.open("GET", url);
 				xhttp.send();
 			}
-			
+
 			headerEle.addEventListener("click", _ => {
 				if (!createAddonCard.cache[addon.resourceUrl].cover || !createAddonCard.cache[addon.resourceUrl].screenshots || !createAddonCard.cache[addon.resourceUrl].cover.url && !createAddonCard.cache[addon.resourceUrl].screenshots.urls.length) return;
 				const appMount = document.querySelector(".app-mount");
 				const openScreenshots = _ => {
 					const urls = [...new Set([createAddonCard.cache[addon.resourceUrl].cover.url, createAddonCard.cache[addon.resourceUrl].screenshots.urls].flat(10).filter(n => n))];
 					const images = {};
-					
+
 					const imageModal = createElement(`<div class="screenshots">
 						<div class="screenshot previous"><img src="" alt=""></div>
 						<div class="screenshot current"><img src="" alt=""></div>
@@ -408,7 +408,7 @@ window.onload = function () {
 					const previous = imageModal.querySelector(".previous");
 					const current = imageModal.querySelector(".current");
 					const next = imageModal.querySelector(".next");
-					
+
 					let i = 0;
 					const switchImages = offset => {
 						offset = Math.round(offset);
@@ -427,7 +427,7 @@ window.onload = function () {
 								let image =	screenshot.firstElementChild;
 								screenshot.appendChild(loadingIcon);
 								image.remove();
-								
+
 								let img = new Image();
 								img.onload = function() {
 									loadingIcon.remove();
@@ -471,26 +471,25 @@ window.onload = function () {
 							if (event.keyCode == 37) switchImages(-1);
 							else if (event.keyCode == 39) switchImages(1);
 						}
-					};		
-					const touchStart = event => {																			
-						if (!document.contains(imageModal)) cleanUp();																			
-						xDown = event[0].clientX;																			
-						yDown = event[0].clientY;
+					};
+					const touchStart = event => {
+						if (!document.contains(imageModal)) cleanUp();
+						xDown = event.touches[0].clientX;
+						yDown = event.touches[0].clientY;
 					};
 					const touchMove = event => {
 						if (!document.contains(imageModal)) cleanUp();
 						if (!xDown || !yDown) return;
 						const xDiff = xDown - event.touches[0].clientX;
 						const yDiff = yDown - event.touches[0].clientY;
-
 						if (Math.abs(xDiff) > Math.abs(yDiff)) {
 							if (xDiff > 0) switchImages(-1);
-							else switchImages(1);										 
+							else switchImages(1); 
 						}
 						xDown = null;
-						yDown = null;																						 
+						yDown = null; 
 					};
-					
+
 					previous.addEventListener("click", _ => switchImages(-1));
 					next.addEventListener("click", _ => switchImages(1));
 					document.addEventListener("keydown", keyDown);
@@ -498,7 +497,7 @@ window.onload = function () {
 					document.addEventListener("touchstart", touchStart);
 					document.addEventListener("touchmove", touchMove);
 					switchImages(0);
-					
+
 					appendModal(imageModal, {onClose: cleanUp});
 				};
 				if (createAddonCard.cache[addon.resourceUrl].screenshots.fetched) openScreenshots();
@@ -526,7 +525,7 @@ window.onload = function () {
 				}
 			});
 		}
-		
+
 		let links = [], buttons = [];
 		if (addon.websiteUrl) links.push({
 			text: "Website",
@@ -558,12 +557,12 @@ window.onload = function () {
 		return card;
 	};
 	createAddonCard.cache = {};
-	
+
 	const sidebar = document.querySelector(".sidebar-region .sidebar");
 	const sidebarHeader = document.querySelector(".sidebar-region .sidebar-header");
 	const sidebarFooter = document.querySelector(".sidebar-region .sidebar-footer");
 	const content = document.querySelector(".content-region .content");
-	
+
 	const sections = [
 		{section: "Title", title: "My Stuff"},
 		{section: "General", renderSection: _ => [
@@ -591,7 +590,7 @@ window.onload = function () {
 		]}
 	];
 	let items = [];
-	
+
 	let selectedSection;
 	const renderContent = data => {
 		if (typeof data.renderSection != "function") return;
@@ -602,9 +601,9 @@ window.onload = function () {
 	};
 	let parsedSection = ((window.location.search.split(`?section=`)[1] || "").split("?")[0] || "").toLowerCase();
 	renderContent(parsedSection && sections.find(data => data.section != "Title" && data.section != "Separator" && data.section.toLowerCase() == parsedSection) || sections.find(data => data.section != "Title" && data.section != "Separator"));
-	
+
 	sidebarHeader.appendChild(createElement(`<div class="logo"><div class="primary">Better</div><div class="secondary">Discord</div></div>`));
-	
+
 	const changeTheme = value => {
 		for (let element of document.querySelectorAll(".theme-dark, .theme-light")) {
 			element.classList.add(value ? "theme-light" : "theme-dark");
@@ -622,7 +621,7 @@ window.onload = function () {
 		}
 	}), themeSwitch.firstElementChild.nextSibling);
 	sidebarFooter.appendChild(themeSwitch);
-	
+
 	for (const data of sections) {
 		const item = createElement(data.section == "Title" ? `<div class="sidebar-title">${data.title}</div>` : data.section == "Separator" ? `<div class="sidebar-separator"></div>` : `<div class="${formatClassName("sidebar-item", selectedSection == data.section && "selected")}">${data.section}</div>`);
 		if (typeof data.renderSection == "function") {
