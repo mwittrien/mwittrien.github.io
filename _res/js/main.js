@@ -196,11 +196,14 @@ window.onload = function () {
 		const header = createElement(`<div class="header"></div>`);
 		const list = createElement(`<div></div>`);
 		header.update = amount => {
+			let hadFocus = document.activeElement && header.querySelector("input") == document.activeElement;
 			while (header.childElementCount) header.firstElementChild.remove();
 			const children = [typeof config.getHeader == "function" ? config.getHeader(amount) : config.getHeader].flat(10).filter(n => n);
 			for (const child of children) header.appendChild(typeof child == "string" ? createElement(`<span>${child}</span>`) : child);
-			let input = header.querySelector("input");
-			if (input) input.focus();
+			if (hadFocus) {
+				let input = header.querySelector("input");
+				if (input) input.focus();
+			}
 		};
 		list.update = _ => {
 			try {
