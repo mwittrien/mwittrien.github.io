@@ -483,8 +483,8 @@ window.onload = function () {
 						const xDiff = xDown - event.touches[0].clientX;
 						const yDiff = yDown - event.touches[0].clientY;
 						if (Math.abs(xDiff) > Math.abs(yDiff)) {
-							if (xDiff > 0) switchImages(-1);
-							else switchImages(1); 
+							if (xDiff > 0) switchImages(1);
+							else switchImages(-1); 
 						}
 						xDown = null;
 						yDown = null; 
