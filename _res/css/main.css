@@ -374,6 +374,9 @@
 	font-weight: 400;
 	line-height: 34px;
 }
+.welcome-details a {
+	font-weight: 600;
+}
 .donations {
 	display: flex;
 	flex: 1 1 auto;
