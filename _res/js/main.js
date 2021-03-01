@@ -24,16 +24,18 @@ window.onload = function () {
 		return [...new Set(classes.flat(10).filter(n => n).join(" ").split(" "))].join(" ").trim();
 	};
 	
-	const appendModal = (...children) => {
+	const appendModal = (modal, config = {}) => {
 		let modals = document.querySelector(".modals");
-		const modalChildren = [children].flat(10);
-		if (!modals || !modalChildren.length) return;
+		if (!modals || !Node.prototype.isPrototypeOf(modal)) return;
 		
 		const wrapper = createElement(`<div class="modal-wrapper"><div class="backdrop"></div></div>`);
 		const backdrop = wrapper.querySelector(".backdrop");
 		
-		backdrop.addEventListener("click", _ => wrapper.remove());
-		for (let child of modalChildren) wrapper.appendChild(child);
+		backdrop.addEventListener("click", _ => {
+			wrapper.remove();
+			if (typeof config.onClose == "function") config.onClose();
+		});
+		wrapper.appendChild(modal);
 		modals.appendChild(wrapper);
 		return wrapper;
 	};
@@ -405,10 +407,13 @@ window.onload = function () {
 					const next = imageModal.querySelector(".next");
 					
 					let i = 0;
-					const switchImages = _ => {
-						loadImage(previous, urls[i-1]);
+					const switchImages = offset => {
+						offset = Math.round(offset);
+						if (isNaN(offset) || !urls[i + offset]) return;
+						i += offset;
+						loadImage(previous, urls[i-  1]);
 						loadImage(current, urls[i]);
-						loadImage(next, urls[i+1]);
+						loadImage(next, urls[i + 1]);
 					};
 					const loadImage = (screenshot, url) => {
 						toggleElement(screenshot, url);
@@ -416,7 +421,7 @@ window.onload = function () {
 							if (images[url]) setImage(screenshot, url);
 							else {
 								let loadingIcon = createSpinner(true);
-								let image =  screenshot.firstElementChild;
+								let image =	screenshot.firstElementChild;
 								screenshot.appendChild(loadingIcon);
 								image.remove();
 								
@@ -445,11 +450,53 @@ window.onload = function () {
 						screenshot.style.setProperty("height", `${height}px`);
 						screenshot.firstElementChild.src = url;
 					};
+					let keyIsDown = false, xDown, yDown;
+					const cleanUp = _ => {
+						document.removeEventListener("keydown", keyDown);
+						document.removeEventListener("keyup", keyUp);
+						document.removeEventListener("touchstart", touchStart);
+						document.removeEventListener("touchmove", touchMove);
+					};
+					const keyUp = event => {
+						if (!document.contains(imageModal)) cleanUp();
+						keyIsDown = false;
+					};
+					const keyDown = event => {
+						if (!document.contains(imageModal)) cleanUp();
+						else if (!keyIsDown) {
+							keyIsDown = true;
+							if (event.keyCode == 37) switchImages(-1);
+							else if (event.keyCode == 39) switchImages(1);
+						}
+					};		
+					const touchStart = event => {																			
+						if (!document.contains(imageModal)) cleanUp();																			
+						xDown = event[0].clientX;																			
+						yDown = event[0].clientY;
+					};
+					const touchMove = event => {
+						if (!document.contains(imageModal)) cleanUp();
+						if (!xDown || !yDown) return;
+						const xDiff = xDown - event.touches[0].clientX;
+						const yDiff = yDown - event.touches[0].clientY;
+
+						if (Math.abs(xDiff) > Math.abs(yDiff)) {
+							if (xDiff > 0) switchImages(-1);
+							else switchImages(1);										 
+						}
+						xDown = null;
+						yDown = null;																						 
+					};
 					
-					previous.addEventListener("click", _ => switchImages(--i));
-					next.addEventListener("click", _ => switchImages(++i));
-					switchImages();
-					appendModal(imageModal);
+					previous.addEventListener("click", _ => switchImages(-1));
+					next.addEventListener("click", _ => switchImages(1));
+					document.addEventListener("keydown", keyDown);
+					document.addEventListener("keyup", keyUp);
+					document.addEventListener("touchstart", touchStart);
+					document.addEventListener("touchmove", touchMove);
+					switchImages(0);
+					
+					appendModal(imageModal, {onClose: cleanUp});
 				};
 				if (createAddonCard.cache[addon.resourceUrl].screenshots.fetched) openScreenshots();
 				else {
