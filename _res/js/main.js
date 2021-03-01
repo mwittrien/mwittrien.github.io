@@ -329,9 +329,7 @@
 		const createAddonCard = addon => {
 			let card = createElement(`<div class="addon-card">
 				<div class="addon-header">
-					<div class="addon-cover-wrapper">
-						<div class="addon-cover-placeholder"></div>
-					</div>
+					<div class="addon-cover-wrapper"></div>
 					<div class="addon-icon-wrapper">
 						<div class="addon-icon">${addon.icon}</div>
 					</div>
