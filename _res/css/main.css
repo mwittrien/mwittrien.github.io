@@ -713,7 +713,7 @@
 	color: var(--header-primary);
 	width: 100%;
 	font-weight: 600;
-	font-size: calc(16 * var(--unit));
+	font-size: calc(18 * var(--unit));
 	line-height: calc(20 * var(--unit));
 }
 .addon-name {
@@ -724,7 +724,7 @@
 .addon-description {
 	color: var(--header-secondary);
 	margin: calc(4 * var(--unit)) 0 calc(16 * var(--unit));
-	font-size: calc(14 * var(--unit));
+	font-size: calc(16 * var(--unit));
 	line-height: calc(18 * var(--unit));
 }
 .addon-controls {
