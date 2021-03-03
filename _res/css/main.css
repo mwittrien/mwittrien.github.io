@@ -809,6 +809,9 @@
 	height: unset;
 	min-height: calc(320 * var(--unit));
 }
+.mobile.portrait .addon-description {
+	overflow: hidden;
+}
 
 .screenshots {
 	display: flex;
