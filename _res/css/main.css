@@ -805,6 +805,10 @@
 .mobile.portrait .addon-list {
 	grid-template-columns: repeat(auto-fill, 100%);
 }
+.mobile.portrait .addon-header {
+	height: unset;
+	min-height: calc(143 * var(--unit));
+}
 
 .screenshots {
 	display: flex;
