@@ -597,8 +597,8 @@
 			{section: "Invites", renderSection: _ => [
 				createInvite({invite: "Jx3TjNS", name: "DevilBro's Haus", details: "Support Server for all my Stuff", icon: "https://mwittrien.github.io/_res/imgs/db_logo.webp"}),
 				createElement(`<div class="divider"></div>`),
-				createInvite({invite: "0Tmfo5ZbORCRqbAd", name: "BetterDiscord", details: "First Support Server for BetterDiscord", icon: "https://mwittrien.github.io/_res/imgs/bd1_logo.webp"}),
-				createInvite({invite: "sbA3xCJ", name: "BetterDiscord2", details: "Second Support Server for BetterDiscord", icon: "https://mwittrien.github.io/_res/imgs/bd2_logo.webp"})
+				createInvite({invite: "0Tmfo5ZbORCRqbAd", name: "BetterDiscord", details: "First Support Server for BD", icon: "https://mwittrien.github.io/_res/imgs/bd1_logo.webp"}),
+				createInvite({invite: "sbA3xCJ", name: "BetterDiscord2", details: "Second Support Server for BD", icon: "https://mwittrien.github.io/_res/imgs/bd2_logo.webp"})
 			]}
 		];
 		let items = [];
