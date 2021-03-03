@@ -12,6 +12,10 @@ window.DownloadApi = {
 				window.DownloadApi.download(window.DownloadApi.converter[parameter](arg), error);
 				break;
 			}
+			else if (parameterString.endsWith(`?${parameter}`)) {
+				window.DownloadApi.download(window.DownloadApi.converter[parameter](), error);
+				break;
+			}
 		}
 	},
 	download: (url, error) => {
