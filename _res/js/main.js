@@ -442,6 +442,7 @@
 
 									let img = new Image();
 									img.onload = function() {
+										if (!document.contains(imageModal)) return;
 										loadingIcon.remove();
 										screenshot.appendChild(image);
 										images[url] = {width: this.width, height: this.height};
