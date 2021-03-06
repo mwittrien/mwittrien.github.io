@@ -611,6 +611,7 @@
 			let sectionElements = [data.renderSection()].flat(10).filter(n => n);
 			for (let element of sectionElements) content.appendChild(element);
 			selectedSection = data.section;
+			document.title = `BetterDiscord Addons - ${data.section}`;
 		};
 		let parsedSection = ((window.location.search.split(`?section=`)[1] || "").split("?")[0] || "").toLowerCase();
 		renderContent(parsedSection && sections.find(data => data.section != "Title" && data.section != "Separator" && data.section.toLowerCase() == parsedSection) || sections.find(data => data.section != "Title" && data.section != "Separator"));
