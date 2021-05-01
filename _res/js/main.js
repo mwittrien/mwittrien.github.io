@@ -317,7 +317,7 @@
 				getHeader: "Required Library",
 				getChildren: response => {
 					let parsedResponse = response.trim().replace(/\r/g, "");
-					let fileName = (parsedResponse.split(" -")[0] || "").replace("# ", "").trim();
+					let fileName = "BDFDB";
 					return createAddonCard({
 						name: fileName,
 						description: (parsedResponse.split("\n").pop() || "").trim(),
