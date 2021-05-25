@@ -618,6 +618,7 @@
 .addon-card:focus,
 .addon-card:hover {
 	background-color: var(--background-tertiary);
+	border-color: var(--background-tertiary);
 	box-shadow: var(--elevation-high);
 	transform: translateY(calc(-1 * var(--unit)));
 }
@@ -694,6 +695,7 @@
 	opacity: 1;
 }
 .addon-icon {
+	color: var(--header-primary);
 	border-radius: calc(10 * var(--unit));
 	width: calc(32 * var(--unit));
 	height: calc(32 * var(--unit));

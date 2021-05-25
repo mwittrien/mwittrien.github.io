@@ -124,6 +124,7 @@
 				if (parent && anker != parent && !anker.contains(parent)) itemLayer.removeTooltip();
 			};
 			let mouseLeave = e => {itemLayer.removeTooltip();};
+			document.addEventListener("wheel", mouseMove);
 			document.addEventListener("mousemove", mouseMove);
 			document.addEventListener("mouseleave", mouseLeave);
 
@@ -138,6 +139,7 @@
 				else tooltipContent.innerText = newText;
 			})(text);
 			(tooltip.removeTooltip = itemLayer.removeTooltip = _ => {
+				document.removeEventListener("wheel", mouseMove);
 				document.removeEventListener("mousemove", mouseMove);
 				document.removeEventListener("mouseleave", mouseLeave);
 				itemLayer.remove();
