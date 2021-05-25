@@ -100,9 +100,9 @@
 		};
 
 		const createTooltip = (anker, text, config = {}) => {
-			let itemLayerContainer = document.querySelector(".layer-items");
+			const itemLayerContainer = document.querySelector(".layer-items");
 			if (!itemLayerContainer) return;
-			let itemLayer = createElement(`<div class="layer-item layer-item-disabled">
+			const itemLayer = createElement(`<div class="layer-item layer-item-disabled">
 				<div class="tooltip">
 					<div class="tooltip-pointer"></div>
 					<div class="tooltip-content"></div>
@@ -110,26 +110,34 @@
 			</div>`);
 			itemLayerContainer.appendChild(itemLayer);
 
-			let tooltip = itemLayer.firstElementChild;
-			let tooltipContent = itemLayer.querySelector(".tooltip-content");
-			let tooltipPointer = itemLayer.querySelector(".tooltip-pointer");
+			const tooltip = itemLayer.firstElementChild;
+			const tooltipContent = itemLayer.querySelector(".tooltip-content");
+			const tooltipPointer = itemLayer.querySelector(".tooltip-pointer");
 
 			if (config.id) tooltip.id = config.id.split(" ").join("");
 			let type = config.type || "top";
 			tooltip.classList.add(`tooltip-${type}`);
 			tooltip.classList.add(config.color ? `tooltip-${config.color}` : "tooltip-primary");
 
-			let mouseMove = e => {
-				let parent = e.target.parentElement.querySelector(":hover");
+			const wheel = e => {
+				const tRects1 = getRects(anker);
+				if (wheel.timeout) clearTimeout(wheel.timeout);
+				wheel.timeout = setTimeout(_ => {
+					const tRects2 = getRects(anker);
+					if (tRects1.x != tRects2.x || tRects1.y != tRects2.y) removeTooltip();
+				}, 500);
+			};
+			const mouseMove = e => {
+				const parent = e.target.parentElement.querySelector(":hover");
 				if (parent && anker != parent && !anker.contains(parent)) itemLayer.removeTooltip();
 			};
-			let mouseLeave = e => {itemLayer.removeTooltip();};
-			document.addEventListener("wheel", mouseMove);
+			const mouseLeave = e => {itemLayer.removeTooltip();};
+			document.addEventListener("wheel", wheel);
 			document.addEventListener("mousemove", mouseMove);
 			document.addEventListener("mouseleave", mouseLeave);
 
-			let observer = new MutationObserver(changes => changes.forEach(change => {
-				let nodes = Array.from(change.removedNodes);
+			const observer = new MutationObserver(changes => changes.forEach(change => {
+				const nodes = Array.from(change.removedNodes);
 				if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n => n.contains(anker))) itemLayer.removeTooltip();
 			}));
 			observer.observe(document.body, {subtree: true, childList: true});
@@ -139,7 +147,7 @@
 				else tooltipContent.innerText = newText;
 			})(text);
 			(tooltip.removeTooltip = itemLayer.removeTooltip = _ => {
-				document.removeEventListener("wheel", mouseMove);
+				document.removeEventListener("wheel", wheel);
 				document.removeEventListener("mousemove", mouseMove);
 				document.removeEventListener("mouseleave", mouseLeave);
 				itemLayer.remove();
