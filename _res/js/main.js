@@ -589,9 +589,9 @@
 		const sections = [
 			{section: "Title", title: "My Stuff"},
 			{section: "General", renderSection: _ => [
-				createElement(`<div class="welcome-message">Welcome to my little Plugins and Themes Repository</div>`),
+				createElement(`<div class="welcome-message">Welcome to my Plugins and Themes Repository</div>`),
 				createElement(`<div class="divider"></div>`),
-				createElement(`<div class="welcome-details">On here you'll find all my Plugins and Themes that are hosted on my <a href="https://github.com/mwittrien/BetterDiscordAddons/" target="_blank">GitHub</a>.</div>`),
+				createElement(`<div class="welcome-details">Here you'll find all my Plugins and Themes that are hosted on my <a href="https://github.com/mwittrien/BetterDiscordAddons/" target="_blank">GitHub</a>.</div>`),
 				createElement(`<div class="welcome-details">If you expierence any Issues or got some Improvement Suggestions for my stuff, then feel free to drop them on <a href="https://github.com/mwittrien/BetterDiscordAddons/Issues" target="_blank">here</a>. But please make sure whether there is already an open Thread for your Issue or Suggestion.</div>`),
 				createElement(`<div class="divider"></div>`),
 				createElement(`<div class="welcome-details">If you enjoy using my Stuff and want to support me feel free to donate to me or become a Patron and receive certain benefits depending on which Tier you choose.</div>`),
