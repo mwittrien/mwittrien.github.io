@@ -109,14 +109,10 @@ body {
 	margin-top: 0;
 	margin-left: 2.5vh;
 }
-.portrait#buttons a .icon {
-	height: 5vh;
-	width: 5vh;
-}
 .portrait #buttons a .label {
 	margin-left: 0;
 	margin-top: 1.5vh;
-	font-size: 2vh;
+	font-size: 1.8vh;
 	font-weight: 550;
 }
 @media (min-aspect-ratio: 2/1) {
