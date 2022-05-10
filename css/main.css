@@ -25,6 +25,13 @@ body {
 	height: 90vh;
 	max-height: 90vh;
 }
+@media (min-aspect-ratio: 2/1) {
+	#flyer {
+		flex: 0 0 40%;
+		height: 80vh;
+		max-height: 80vh;
+	}
+}
 #flyer_inner {
 	display: flex;
 	justify-content: flex-end;
