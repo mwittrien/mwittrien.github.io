@@ -107,7 +107,11 @@ body {
 }
 .portrait #buttons a + a {
 	margin-top: 0;
-	margin-left: 3vh;
+	margin-left: 2.5vh;
+}
+.portrait#buttons a .icon {
+	height: 5vh;
+	width: 5vh;
 }
 .portrait #buttons a .label {
 	margin-left: 0;
