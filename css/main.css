@@ -11,7 +11,6 @@ html, body {
 }
 * {
 	font-family: Montserrat, sans-serif;
-	font-weight: bold;
 }
 body {
 	display: flex;
@@ -71,6 +70,7 @@ body {
 #buttons a .label {
 	margin-left: 2vh;
 	font-size: 5vh;
+	font-weight: bold;
 	text-transform: uppercase;
 }
 .portrait body {
@@ -101,6 +101,7 @@ body {
 	margin: 0;
 }
 .portrait #buttons a {
+	flex-direction: column;
 	border-radius: 2.5vh 2.5vh 0 0;
 	transform: translateX(0);
 }
@@ -109,7 +110,10 @@ body {
 	margin-left: 3vh;
 }
 .portrait #buttons a .label {
-	display: none;
+	margin-left: 0;
+	margin-top: 1.5vh;
+	font-size: 2vh;
+	font-weight: 550;
 }
 @media (min-aspect-ratio: 2/1) {
 	html:not(.portrait) #flyer {
