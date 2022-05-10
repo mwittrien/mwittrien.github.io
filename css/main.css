@@ -25,13 +25,6 @@ body {
 	height: 90vh;
 	max-height: 90vh;
 }
-@media (min-aspect-ratio: 2/1) {
-	#flyer {
-		flex: 0 0 40%;
-		height: 80vh;
-		max-height: 80vh;
-	}
-}
 #flyer_inner {
 	display: flex;
 	justify-content: flex-end;
@@ -66,7 +59,7 @@ body {
 }
 #buttons a:hover {
 	background: #E6007D;
-	transform: translateX(0);
+	transform: translateX(0) !important;
 }
 #buttons a + a {
 	margin-top: 3vh;
@@ -117,4 +110,17 @@ body {
 }
 .portrait #buttons a .label {
 	display: none;
+}
+@media (min-aspect-ratio: 2/1) {
+	html:not(.portrait) #flyer {
+		flex: 0 0 40%;
+		height: 80vh;
+		max-height: 80vh;
+	}
+	html:not(.portrait) #buttons {
+		margin-left: 6vh;
+	}
+	html:not(.portrait) #buttons a {
+		transform: translateX(6vh);
+	}
 }
