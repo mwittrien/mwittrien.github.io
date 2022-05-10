@@ -1,0 +1,113 @@
+@font-face {font-family: Montserrat; src: url("../fonts/Montserrat.otf"); } 
+@font-face {font-family: Montserrat; font-weight: light; src: url("../fonts/Montserrat-Light.otf");}
+@font-face {font-family: Montserrat; font-weight: bold; src: url("../fonts/Montserrat-Bold.otf");}
+
+html, body {
+	background: #000;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+* {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+}
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#flyer {
+	display: flex;
+	justify-content: flex-end;
+	flex: 0 0 50%;
+	height: 90vh;
+	max-height: 90vh;
+}
+#flyer_inner {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	height: 100%;
+}
+#flyer img {
+	height: 100%;
+	border-radius: 1vh;
+	object-fit: contain;
+}
+#buttons {
+	flex-grow: 0;
+	display: flex;
+	flex-direction: column;
+	margin-left: 3vh;
+	width: 100%;
+}
+#buttons a {
+	display: flex;
+	align-items: center;
+	padding: 3vh;
+	background: #3D322D;
+	color: #FFF;
+	border: 0;
+	border-radius: 2.5vh 0 0 2.5vh;
+	text-decoration: unset;
+	cursor: pointer;
+	overflow: visible;
+	transition: all .2s;
+	transform: translateX(3vh);
+}
+#buttons a:hover {
+	background: #E6007D;
+	transform: translateX(0);
+}
+#buttons a + a {
+	margin-top: 3vh;
+}
+#buttons a .icon {
+	height: 5.5vh;
+	width: 5.5vh;
+}
+#buttons a .label {
+	margin-left: 2vh;
+	font-size: 5vh;
+	text-transform: uppercase;
+}
+.portrait body {
+	flex-direction: column;
+}
+.portrait #flyer {
+	flex: 1 1 auto;
+	width: 90vw;
+	max-width: 90vw;
+	height: calc(90vh - 11vh);
+	max-height: calc(90vh - 11vh);
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+.portrait #flyer_inner {
+	display: block;
+	width: unset;
+	height: unset;
+	margin: auto;
+}
+.portrait #flyer img {
+	width: 100%;
+	height: unset;
+}
+.portrait #buttons {
+	flex-direction: row;
+	justify-content: center;
+	margin: 0;
+}
+.portrait #buttons a {
+	border-radius: 2.5vh 2.5vh 0 0;
+	transform: translateX(0);
+}
+.portrait #buttons a + a {
+	margin-top: 0;
+	margin-left: 3vh;
+}
+.portrait #buttons a .label {
+	display: none;
+}
