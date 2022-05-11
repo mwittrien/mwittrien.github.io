@@ -24,7 +24,7 @@ a {
 	color: #E6007D;
 }
 #controls {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -32,6 +32,7 @@ a {
 	justify-content: flex-end;
 	align-items: center;
 	margin-bottom: .5vh;
+	z-index: 1;
 }
 #sidebar_button {
 	display: flex;
@@ -45,7 +46,6 @@ a {
 	width: 2.5vh;
 	height: 2.5vh;
 	padding: 1.5vh;
-	z-index: 1;
 	transition: all .2s;
 }
 #sidebar_button svg {
