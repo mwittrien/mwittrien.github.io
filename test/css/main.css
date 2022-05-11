@@ -119,6 +119,7 @@ a {
 	width: 49vw;
 }
 .sidebar_inner {
+	width: 45vw;
 	height: 96vh;
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
@@ -211,6 +212,7 @@ a {
 	font-size: 1.6vh;
 }
 .portrait .sidebar_inner {
+	width: calc(96vw - var(--button-width));
 	font-size: 100%;
 }
 .portrait.mobile .sidebar_inner {
