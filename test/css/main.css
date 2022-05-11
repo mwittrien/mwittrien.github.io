@@ -52,7 +52,7 @@ a {
 	flex-direction: row-reverse;
 }
 #dates_button {
-	--button-width: 24vh;
+	--button-width: 32vh;
 	--button-padding: 2.5vh;
 	right: 0;
 }
