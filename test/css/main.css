@@ -83,9 +83,9 @@ a {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-    font-weight: 550;
-    text-transform: uppercase;
-    white-space: pre-wrap;
+	font-weight: 550;
+	text-transform: uppercase;
+	white-space: pre-wrap;
 	overflow: hidden;
 }
 .controls_button_label,
@@ -118,11 +118,11 @@ a {
 	width: 49vw;
 }
 .sidebar_inner {
-    height: calc(100% - 4vh);
+	height: calc(100% - 4vh);
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
-    overflow-x: hidden;
-    overflow-y: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	text-align: left;
 	font-size: 80%;
 }
@@ -246,6 +246,9 @@ a {
 	font-weight: 550;
 }
 @media (min-aspect-ratio: 2/1) {
+	html:not(.portrait) .sidebar_inner {
+		height: calc(100% - 14vh);
+	}
 	html:not(.portrait) #flyer {
 		flex: 0 0 40%;
 		height: 75vh;
