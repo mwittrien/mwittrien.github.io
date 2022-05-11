@@ -169,14 +169,16 @@ a {
 	margin-top: calc(2vh + var(--button-height));
 }
 #flyer {
+	flex: 0 0 50%;
 	display: flex;
 	justify-content: flex-end;
-	flex: 0 0 50%;
+	height: 90vh;
 	max-height: 90vh;
 }
 .portrait #flyer {
 	flex: 1 1 auto;
 	min-height: 0;
+	height: unset;
 	max-width: 90vw;
 	margin-bottom: 2vh;
 }
