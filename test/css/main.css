@@ -187,14 +187,11 @@ a {
 	margin-bottom: 2vh;
 }
 #flyer img {
-	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 	border-radius: 1vh;
 	overflow: hidden;
 	object-fit: contain;
-}
-.portrait #flyer img {
-	width: 100%;
-	height: unset;
 }
 #buttons {
 	flex-grow: 0;
