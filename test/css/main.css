@@ -178,9 +178,10 @@ a {
 .portrait #flyer {
 	flex: 1 1 auto;
 	justify-content: center;
+	max-width: 90vw;
 	min-height: 0;
 	height: unset;
-	max-width: 90vw;
+	max-height: 80vh;
 	margin-bottom: 2vh;
 }
 #flyer img {
