@@ -39,8 +39,10 @@ a {
 #controls {
 	position: fixed;
 	top: 0;
-	left: 0;
 	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
 	z-index: 1;
 }
 .controls_button {
@@ -49,14 +51,15 @@ a {
 	justify-content: flex-start;
 	align-items: center;
 	width: var(--button-width);
+	pointer-events: all;
 	transition: all .2s;
 }
 .controls_button:hover {
-	width: calc(49vw + var(--button-width));
+	width: calc(50% + var(--button-width));
 	z-index: 2;
 }
 .portrait .controls_button:hover {
-	width: 100vw;
+	width: 100%;
 }
 #impressum_button {
 	left: 0;
@@ -118,16 +121,16 @@ a {
 	backdrop-filter: blur(5px);
 	color: #FFF;
 	width: 0;
-	height: 100vh;
+	height: 100%;
 	overflow: hidden;
 	transition: all .2s;
 }
 .controls_button:hover .sidebar {
 	background: rgba(0,0,0,.9);
-	width: 49vw;
+	width: 50%;
 }
 .portrait .controls_button:hover .sidebar {
-	width: calc(100vw - var(--button-width));
+	width: calc(100% - var(--button-width));
 }
 #impressum {
 	left: 0;
@@ -137,7 +140,7 @@ a {
 }
 .sidebar_inner {
 	width: 45vw;
-	height: calc(100vh - 3vh - var(--button-padding));
+	height: calc(100% - 3vh - var(--button-padding));
 	margin: var(--button-padding) 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
 	overflow-x: hidden;
@@ -146,7 +149,7 @@ a {
 	font-size: 80%;
 }
 .portrait .sidebar_inner {
-	width: calc(96vw - var(--button-width));
+	width: calc(100% - var(--button-width));
 	font-size: 100%;
 }
 .portrait.mobile .sidebar_inner {
@@ -164,21 +167,21 @@ a {
 }
 .portrait #wrapper {
 	flex-direction: column;
-	width: 100vw;
-	height: calc(100vh - 2vh - var(--button-height));
+	width: 100%;
+	height: calc(100% - 2vh - var(--button-height));
 	margin-top: calc(2vh + var(--button-height));
 }
 #flyer {
 	flex: 0 0 50%;
 	display: flex;
 	justify-content: flex-end;
-	height: 90vh;
-	max-height: 90vh;
+	height: 90%;
+	max-height: 90%;
 }
 .portrait #flyer {
 	flex: 1 1 auto;
 	justify-content: center;
-	max-width: 90vw;
+	max-width: 90%;
 	min-height: 0;
 	height: unset;
 	margin-bottom: 2vh;
