@@ -186,6 +186,7 @@ a {
 #flyer img {
 	height: 100%;
 	border-radius: 1vh;
+	overflow: hidden;
 	object-fit: contain;
 }
 .portrait #flyer img {
