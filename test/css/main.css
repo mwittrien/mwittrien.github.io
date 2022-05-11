@@ -212,7 +212,7 @@ a {
 	max-width: 90vw;
 	height: 75vh;
 	max-height: 75vh;
-	margin-top: 3vh;
+	margin-top: 4vh;
 	margin-bottom: .5vh;
 }
 .portrait #flyer_inner {
@@ -246,6 +246,9 @@ a {
 	font-weight: 550;
 }
 @media (min-aspect-ratio: 2/1) {
+	html:not(.portrait) .sidebar_inner {
+		height: 80vh;
+	}
 	html:not(.portrait) #flyer {
 		flex: 0 0 40%;
 		height: 75vh;
