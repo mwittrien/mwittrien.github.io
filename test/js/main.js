@@ -8,4 +8,12 @@
 	};
 	isMobile();
 	window.addEventListener("resize", isMobile);
+	
+	var result = null;
+	const http = new XMLHttpRequest();
+	http.addEventListener("load", (a,b,c,d,e) => {
+		console.log(a,b,c,d,e);
+	});
+	http.open("GET", "./txt/dates.txt");
+	http.send();
 })();
