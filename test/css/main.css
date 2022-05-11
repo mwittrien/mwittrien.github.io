@@ -120,7 +120,7 @@ a {
 .sidebar_inner {
 	width: 45vw;
 	height: 96vh;
-	margin: 1vh 1vw 1vh 1vw;
+	margin: var(--button-padding) 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
 	overflow-x: hidden;
 	overflow-y: scroll;
