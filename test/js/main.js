@@ -11,8 +11,8 @@
 	
 	console.log("test");
 	const http = new XMLHttpRequest();
-	http.addEventListener("load", (a,b,c,d,e) => {
-		console.log(a,b,c,d,e);
+	http.addEventListener("load", _ => {
+		if (http.status == 200 && http.response) console.log(http.response);
 	});
 	http.open("GET", "./txt/dates.txt");
 	http.send();
