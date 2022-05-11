@@ -119,6 +119,7 @@ a {
 	color: #FFF;
 	width: 0;
 	height: 100vh;
+	height: -webkit-fill-available;
 	overflow: hidden;
 	transition: all .2s;
 }
@@ -137,7 +138,7 @@ a {
 }
 .sidebar_inner {
 	width: 45vw;
-	height: 96vh;
+	height: calc(100vh - 3vh - var(--button-padding));
 	margin: var(--button-padding) 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
 	overflow-x: hidden;
@@ -181,7 +182,6 @@ a {
 	max-width: 90vw;
 	min-height: 0;
 	height: unset;
-	max-height: 80vh;
 	margin-bottom: 2vh;
 }
 #flyer img {
