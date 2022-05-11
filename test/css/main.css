@@ -127,9 +127,6 @@ a {
 }
 .controls_button:hover .sidebar {
 	background: rgba(0,0,0,.9);
-	width: 50%;
-}
-.portrait .controls_button:hover .sidebar {
 	width: calc(100% - var(--button-width));
 }
 #impressum {
