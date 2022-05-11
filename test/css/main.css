@@ -118,7 +118,7 @@ a {
 	width: 49vw;
 }
 .sidebar_inner {
-	height: calc(100% - 4vh);
+	height: 96vh;
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
 	overflow-x: hidden;
@@ -246,9 +246,6 @@ a {
 	font-weight: 550;
 }
 @media (min-aspect-ratio: 2/1) {
-	html:not(.portrait) .sidebar_inner {
-		height: calc(100% - 14vh);
-	}
 	html:not(.portrait) #flyer {
 		flex: 0 0 40%;
 		height: 75vh;
