@@ -9,11 +9,28 @@
 	isMobile();
 	window.addEventListener("resize", isMobile);
 	
-	console.log("test");
-	const http = new XMLHttpRequest();
-	http.addEventListener("load", _ => {
-		if (http.status == 200 && http.response) console.log(http.response);
+	const dateHTTP = new XMLHttpRequest();
+	dateHTTP.addEventListener("load", _ => {
+		const nextDatesWrapper = document.querySelector("#dates ul");
+		if (nextDatesWrapper && dateHTTP.status == 200 && dateHTTP.response) for (let line of dateHTTP.response.replace(/\r/, "").trim().split("/")) {
+			const data = line.trim().split("/").map(trim);
+			if (data[0] && data[1]) {
+				const lineEle = document.createElement("li");
+				const dateEle = document.createElement("strong");
+				dateEle.innerText = data[0];
+				lineEle.appendChild(dateEle);
+				const nameEle = document.createElement("span");
+				nameEle.innerText = `: ${data[1]}`;
+				lineEle.appendChild(nameEle);
+				if (data[2]) {
+					const descriptionEle = document.createElement("span");
+					descriptionEle.innerText = ` - ${data[2]}`;
+					lineEle.appendChild(descriptionEle);
+				}
+				nextDatesWrapper.appendChild(lineEle);
+			}
+		}
 	});
-	http.open("GET", "./txt/dates.txt");
-	http.send();
+	dateHTTP.open("GET", "./txt/dates.txt");
+	dateHTTP.send();
 })();
