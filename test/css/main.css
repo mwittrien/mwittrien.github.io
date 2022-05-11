@@ -33,68 +33,100 @@ a {
 	top: 0;
 	left: 0;
 	right: 0;
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
 	margin-bottom: .5vh;
 	z-index: 1;
 }
-#sidebar_button {
+.controls_button {
+	--button-width: 6.5vh;
+	--button-padding: 1.75vh;
+	position: absolute;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	position: relative;
-	width: 5.5vh;
+	width: var(--button-width);
 	transition: all .2s;
 }
-#sidebar_button:hover {
-	width: calc(49vw + 5.5vh);
+#impressum_button {
+	left: 0;
+	flex-direction: row-reverse;
 }
-#sidebar_button_inner {
+#dates_button {
+	--button-width: 13vh;
+	--button-padding: 1vh;
+	right: 0;
+}
+.controls_button:hover {
+	width: calc(49vw + var(--button-width));
+	z-index: 2;
+}
+.controls_button_inner {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background: rgba(0,0,0,.7);
 	backdrop-filter: blur(5px);
 	color: #FFF;
-	border-radius: 0 0 0 1vh;
-	padding: 1.5vh;
+	padding: var(--button-padding);
 	transition: all .2s;
 }
-#sidebar_button:hover #sidebar_button_inner {
+#impressum_button .controls_button_inner {
+	border-radius: 0 0 1vh 0;
+}
+#dates_button .controls_button_inner {
+	border-radius: 0 0 0 1vh;
+}
+.controls_button:hover .controls_button_inner {
 	background: rgba(0,0,0,.9);
 }
-#sidebar_button_inner svg {
-	width: 2.5vh;
-	height: 2.5vh;
+.controls_button_label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+    font-weight: 550;
+    text-transform: uppercase;
+    white-space: pre-wrap;
+	overflow: hidden;
 }
-#sidebar {
+.controls_button_label,
+.controls_button_inner svg {
+	width: calc(var(--button-width) - calc(var(--button-padding) * 2));
+	height: calc(6.5vh - calc(var(--button-padding) * 2));
+}
+#dates_button .controls_button_label {
+	font-size: 1.6vh;
+}
+.sidebar {
 	position: absolute;
 	top: 0;
-	right: 0;
 	background: rgba(0,0,0,.7);
 	backdrop-filter: blur(5px);
 	color: #FFF;
 	width: 0;
 	height: 100vh;
+	overflow: hidden;
 	transition: all .2s;
 }
-#sidebar_button:hover #sidebar {
+#impressum {
+	left: 0;
+}
+#dates {
+	right: 0;
+}
+.controls_button:hover .sidebar {
 	background: rgba(0,0,0,.9);
 	width: 49vw;
 }
-#sidebar_inner {
+.sidebar_inner {
     height: calc(100% - 4vh);
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
     overflow-x: hidden;
     overflow-y: scroll;
 	text-align: left;
-}
-#impressum {
 	font-size: 80%;
 }
-#impressum h1 {
+.sidebar_inner h1 {
 	margin-top: 0;
 }
 #wrapper {
@@ -159,16 +191,16 @@ a {
 	font-weight: bold;
 	text-transform: uppercase;
 }
-.portrait #sidebar_button:hover {
+.portrait .controls_button:hover {
 	width: 100vw;
 }
-.portrait #sidebar_button:hover #sidebar {
-	width: calc(100vw - 5.5vh);
+.portrait .controls_button:hover .sidebar {
+	width: calc(100vw - var(--button-width));
 }
-.portrait #impressum {
+.portrait .sidebar_inner {
 	font-size: 100%;
 }
-.portrait.mobile #impressum {
+.portrait.mobile .sidebar_inner {
 	font-size: 200%;
 }
 .portrait #wrapper {
