@@ -37,8 +37,9 @@ a {
 	z-index: 1;
 }
 .controls_button {
-	--button-width: 6.5vh;
-	--button-padding: 1.75vh;
+	--button-width: 12vh;
+	--button-height: 12vh;
+	--button-padding: 3vh;
 	position: absolute;
 	display: flex;
 	justify-content: flex-start;
@@ -51,8 +52,8 @@ a {
 	flex-direction: row-reverse;
 }
 #dates_button {
-	--button-width: 13vh;
-	--button-padding: 1vh;
+	--button-width: 24vh;
+	--button-padding: 2.5vh;
 	right: 0;
 }
 .controls_button:hover {
@@ -91,10 +92,10 @@ a {
 .controls_button_label,
 .controls_button_inner svg {
 	width: calc(var(--button-width) - calc(var(--button-padding) * 2));
-	height: calc(6.5vh - calc(var(--button-padding) * 2));
+	height: calc(var(--button-height) - calc(var(--button-padding) * 2));
 }
 #dates_button .controls_button_label {
-	font-size: 1.6vh;
+	font-size: 4vh;
 }
 .sidebar {
 	position: absolute;
@@ -191,11 +192,23 @@ a {
 	font-weight: bold;
 	text-transform: uppercase;
 }
+.portrait .controls_button {
+	--button-width: 6.5vh;
+	--button-height: 6.5vh;
+	--button-padding: 1.75vh;
+}
 .portrait .controls_button:hover {
 	width: 100vw;
 }
 .portrait .controls_button:hover .sidebar {
 	width: calc(100vw - var(--button-width));
+}
+.portrait #dates_button {
+	--button-width: 13vh;
+	--button-padding: 1vh;
+}
+.portrait #dates_button .controls_button_label {
+	font-size: 1.6vh;
 }
 .portrait .sidebar_inner {
 	font-size: 100%;
