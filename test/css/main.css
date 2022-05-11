@@ -121,7 +121,7 @@ a {
 	backdrop-filter: blur(5px);
 	color: #FFF;
 	width: 0;
-	height: 100%;
+	height: 100vh;
 	overflow: hidden;
 	transition: all .2s;
 }
@@ -140,7 +140,7 @@ a {
 }
 .sidebar_inner {
 	width: 45vw;
-	height: calc(100% - 3vh - var(--button-padding));
+	height: calc(96vh - 3vh - var(--button-padding));
 	margin: var(--button-padding) 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
 	overflow-x: hidden;
