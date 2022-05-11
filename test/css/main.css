@@ -2,6 +2,11 @@
 @font-face {font-family: Montserrat; font-weight: light; src: url("../fonts/Montserrat-Light.otf");}
 @font-face {font-family: Montserrat; font-weight: bold; src: url("../fonts/Montserrat-Bold.otf");}
 
+
+:root {
+	--accentcolor: #E6007D;
+}
+
 html {
 	background: url(../imgs/background.jpg) center/cover no-repeat;
 }
@@ -21,7 +26,7 @@ a, button {
 	text-decoration: unset;
 }
 a {
-	color: #E6007D;
+	color: var(--accentcolor);
 }
 #controls {
 	position: fixed;
@@ -80,13 +85,13 @@ a {
 }
 #sidebar_inner {
     height: calc(100% - 4vh);
-	padding: 2vh 2vw 2vh 2vw;
-}
-#impressum {
-    height: 100%;
+	margin: 1vh 1vw 1vh 1vw;
+	padding: 1vh 1vw 1vh 1vw;
     overflow-x: hidden;
     overflow-y: scroll;
 	text-align: left;
+}
+#impressum {
 	font-size: 80%;
 }
 #impressum h1 {
@@ -138,7 +143,7 @@ a {
 	transform: translateX(3vh);
 }
 #buttons a:hover {
-	background: #E6007D;
+	background: var(--accentcolor);
 	transform: translateX(0) !important;
 }
 #buttons a + a {
@@ -234,7 +239,7 @@ a {
 	background-clip: padding-box;
 	border: .5vw solid transparent;
 	border-radius: 1vw;
-	background-color: #E6007D;
+	background-color: var(--accentcolor);
 }
 *::-webkit-scrollbar-corner {
 	background-color: transparent;
