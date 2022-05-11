@@ -12,9 +12,8 @@
 	const dateHTTP = new XMLHttpRequest();
 	dateHTTP.addEventListener("load", _ => {
 		const nextDatesWrapper = document.querySelector("#dates ul");
-		if (nextDatesWrapper && dateHTTP.status == 200 && dateHTTP.response) for (let line of dateHTTP.response.replace(/\r/, "").trim().split("/")) {
+		if (nextDatesWrapper && dateHTTP.status == 200 && dateHTTP.response) for (let line of dateHTTP.response.replace(/\r/, "").trim().split("\n")) {
 			const data = line.trim().split("/").map(n => n.trim());
-			console.log(data);
 			if (data[0] && data[1]) {
 				const lineEle = document.createElement("li");
 				const dateEle = document.createElement("strong");
