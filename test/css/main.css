@@ -55,11 +55,11 @@ a {
 	transition: all .2s;
 }
 .controls_button:hover {
-	width: calc(50% + var(--button-width));
+	width: calc(50vw + var(--button-width));
 	z-index: 2;
 }
 .portrait .controls_button:hover {
-	width: 100%;
+	width: 100vw;
 }
 #impressum_button {
 	left: 0;
@@ -127,7 +127,10 @@ a {
 }
 .controls_button:hover .sidebar {
 	background: rgba(0,0,0,.9);
-	width: calc(100% - var(--button-width));
+	width: 50vw;
+}
+.portrait .controls_button:hover .sidebar {
+	width: calc(100vw - var(--button-width));
 }
 #impressum {
 	left: 0;
@@ -136,7 +139,7 @@ a {
 	right: 0;
 }
 .sidebar_inner {
-	width: 100%;
+	width: 50vw;
 	height: calc(96vh - 3vh - var(--button-padding));
 	margin: var(--button-padding) 1vw 1vh 1vw;
 	padding: 1vh 1vw 1vh 1vw;
@@ -146,6 +149,7 @@ a {
 	font-size: 80%;
 }
 .portrait .sidebar_inner {
+	width: calc(100vw - var(--button-width));
 	font-size: 100%;
 }
 .portrait.mobile .sidebar_inner {
