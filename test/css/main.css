@@ -177,18 +177,20 @@ a {
 }
 .portrait #flyer {
 	flex: 1 1 auto;
+	justify-content: center;
 	min-height: 0;
 	height: unset;
 	max-width: 90vw;
 	margin-bottom: 2vh;
 }
-.portrait.mobile #flyer {
-	max-width: 80vw;
-}
 #flyer img {
 	height: 100%;
 	border-radius: 1vh;
 	object-fit: contain;
+}
+.portrait #flyer img {
+	width: 100%;
+	height: unset;
 }
 #buttons {
 	flex-grow: 0;
