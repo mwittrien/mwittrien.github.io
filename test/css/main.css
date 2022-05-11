@@ -212,8 +212,8 @@ a {
 	max-width: 90vw;
 	height: 75vh;
 	max-height: 75vh;
-	margin-top: .5vh;
-	margin-bottom: 2vh;
+	margin-top: 1.25vh;
+	margin-bottom: 1.25vh;
 }
 .portrait #flyer_inner {
 	display: block;
