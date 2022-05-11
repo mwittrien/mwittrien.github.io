@@ -79,9 +79,13 @@ a {
 	width: 49vw;
 }
 #sidebar_inner {
+    height: calc(100% - 4vh);
 	padding: 2vh 2vw 2vh 2vw;
 }
 #impressum {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 	text-align: left;
 	font-size: 80%;
 }
@@ -157,6 +161,9 @@ a {
 	width: calc(100vw - 5.5vh);
 }
 .portrait #impressum {
+	font-size: 100%;
+}
+.portrait.mobile #impressum {
 	font-size: 200%;
 }
 .portrait #wrapper {
@@ -213,4 +220,22 @@ a {
 	html:not(.portrait) #buttons a {
 		transform: translateX(6vh);
 	}
+}
+*::-webkit-scrollbar {
+	width: 2vw;
+	height: 2vw;
+}
+*::-webkit-scrollbar-track {
+	border-color: transparent;
+	background-color: transparent;
+	border: .5vw solid transparent;
+}
+*::-webkit-scrollbar-thumb {
+	background-clip: padding-box;
+	border: .5vw solid transparent;
+	border-radius: 1vw;
+	background-color: #E6007D;
+}
+*::-webkit-scrollbar-corner {
+	background-color: transparent;
 }
