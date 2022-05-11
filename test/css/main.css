@@ -210,10 +210,9 @@ a {
 	flex: 1 1 auto;
 	width: 90vw;
 	max-width: 90vw;
-	height: 75vh;
-	max-height: 75vh;
-	margin-top: 4vh;
-	margin-bottom: .5vh;
+	height: 72.5vh;
+	max-height: 72.5vh;
+	margin-bottom: 1vh;
 }
 .portrait #flyer_inner {
 	display: block;
