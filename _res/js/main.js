@@ -258,7 +258,7 @@
 		};
 		createLoadingList.cache = {};
 		const createAddonList = (type, ending) => {
-			let [header, list] = createLoadingList(`https://mwittrien.github.io/BetterDiscordAddons/${type}/README.md`, {
+			let [header, list] = createLoadingList(`https://kokofixcomputers.github.io/BetterDiscordAddons/${type}/README.md`, {
 				className: "addon-list",
 				getHeader: amount => {
 					const search = createElement(`<div class="addon-list-search search">
@@ -311,9 +311,9 @@
 						name: name,
 						description: description,
 						icon: `<svg width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="${type == "Plugins" ? "m 11.470703,0.625 c -1.314284,0 -2.3808593,1.0666594 -2.3808592,2.3808594 V 4.4335938 H 5.2792969 c -1.0476168,0 -1.8945313,0.85855 -1.8945313,1.90625 v 3.6191406 h 1.4179688 c 1.41905,0 2.5722656,1.1512126 2.5722656,2.5703126 0,1.4191 -1.1532156,2.572266 -2.5722656,2.572265 H 3.375 v 3.619141 c 0,1.0477 0.8566801,1.904297 1.9042969,1.904297 h 3.6191406 v -1.427734 c 0,-1.4189 1.1532235,-2.572266 2.5722655,-2.572266 1.41905,0 2.570313,1.153366 2.570313,2.572266 V 20.625 h 3.61914 c 1.047626,0 1.90625,-0.856597 1.90625,-1.904297 v -3.810547 h 1.427735 c 1.314292,0 2.380859,-1.066559 2.380859,-2.380859 0,-1.3143 -1.066567,-2.38086 -2.380859,-2.380859 H 19.566406 V 6.3398438 c 0,-1.0477002 -0.858624,-1.90625 -1.90625,-1.90625 H 13.851562 V 3.0058594 c 0,-1.3142 -1.066568,-2.3808594 -2.380859,-2.3808594 z" : "m 14.69524,1.9999881 c -0.17256,0 -0.34519,0.065 -0.47686,0.1969 L 8.8655531,7.5498683 16.449675,15.134198 21.802502,9.7812182 c 0.26333,-0.2633 0.26333,-0.6904 0,-0.9537 L 20.7902,7.8168183 c -0.22885,-0.2289 -0.58842,-0.2633 -0.85606,-0.081 l -2.127134,1.4452499 1.437076,-2.1418399 c 0.17949,-0.2675 0.14486,-0.6251001 -0.083,-0.8528001 l -2.195488,-2.19433 c -0.20264,-0.2026 -0.51169,-0.2562 -0.7698,-0.1318 l -0.37921,0.1839 0.18228,-0.4036001 c 0.11521,-0.2555 0.0599,-0.5553 -0.13834,-0.7535 l -0.68843,-0.6901 c -0.131639,-0.13172 -0.30429,-0.19701 -0.476854,-0.19701 z M 7.8695308,8.5459582 6.3201566,10.095378 c -0.126449,0.1264 -0.196927,0.298 -0.196927,0.4769 0,0.1788 0.07043,0.3505 0.196927,0.4769 l 1.469627,1.46967 c 0.283151,0.2832 0.421272,0.6744 0.377578,1.07255 -0.04365,0.3979 -0.264001,0.7495 -0.602173,0.9651 -4.3184212,2.75283 -4.720939,3.15533 -4.853187,3.28763 -0.9493352,0.9493 -0.9493352,2.494471 0,3.443871 0.9502793,0.9503 2.4954759,0.9484 3.4437772,0 0.132338,-0.1323 0.534965,-0.535 3.2875378,-4.853321 0.215049,-0.3374 0.5670574,-0.5568 0.9651044,-0.6006 0.399307,-0.044 0.790042,0.094 1.072518,0.376 l 1.469626,1.46967 c 0.26328,0.2633 0.69043,0.2633 0.95371,0 l 1.549374,-1.54942 z M 4.4762059,18.571608 c 0.243902,0 0.487705,0.092 0.673783,0.2783 0.3722,0.3722 0.3722,0.975401 0,1.347601 -0.3722,0.3722 -0.97541,0.3722 -1.3475649,0 -0.3722,-0.3722 -0.3722,-0.975401 0,-1.347601 0.1861,-0.1861 0.42988,-0.2783 0.6737819,-0.2783 z"}"/></svg>`,
-						resourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/_res`,
-						websiteUrl: `https://github.com/mwittrien/BetterDiscordAddons/tree/master/${type}/${fileName}`,
-						sourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/${type}/${fileName}/${fileName}${ending}`,
+						resourceUrl: `https://kokofixcomputers.github.io/BetterDiscordAddons/${type}/${fileName}/_res`,
+						websiteUrl: `https://github.com/kokofixcomputers/BetterDiscordAddons/tree/master/${type}/${fileName}`,
+						sourceUrl: `https://kokofixcomputers.github.io/BetterDiscordAddons/${type}/${fileName}/${fileName}${ending}`,
 						download: `?${type.toLowerCase().slice(0, -1)}=${l[0].split("/").pop()}`
 					});
 				}).filter(n => n)
@@ -322,7 +322,7 @@
 		};
 		createAddonList.search = {};
 		const createLibraryEntry = _ => {
-			return createLoadingList("https://mwittrien.github.io/BetterDiscordAddons/Library/README.md", {
+			return createLoadingList("https://kokofixcomputers.github.io/BetterDiscordAddons/Library/README.md", {
 				className: "addon-list",
 				getHeader: "Required Library",
 				getChildren: response => {
@@ -332,9 +332,9 @@
 						name: fileName,
 						description: (parsedResponse.split("\n").pop() || "").trim(),
 						icon: `<svg width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="m 7.3125,2.625 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 14.929687 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 2.710313,0 3.840547,1.498711 4.101563,1.914062 V 3.9905599 C 10.603047,3.3127865 9.3007813,2.625 7.3125,2.625 Z M 4.96875,3.796875 c -0.3238672,0 -0.5859375,0.2620703 -0.5859375,0.5859375 V 17.273437 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 h 5.30599 C 9.9465755,17.461602 9.0865625,16.6875 7.3125,16.6875 c -0.9692969,0 -1.7578125,-0.788516 -1.7578125,-1.757813 V 3.796875 Z m 9.375,0 c -0.662031,0 -1.266641,0.2287891 -1.757812,0.6005859 V 18.445312 c 0,-0.323281 0.262656,-0.585937 0.585937,-0.585937 h 5.859375 c 0.323868,0 0.585937,-0.26207 0.585937,-0.585938 V 4.3828125 c 0,-0.3238672 -0.262069,-0.5859375 -0.585937,-0.5859375 z M 2.5859375,4.96875 C 2.2620703,4.96875 2,5.2308203 2,5.5546875 V 19.617187 c 0,0.323868 0.2620703,0.585938 0.5859375,0.585938 H 9.171224 c 0.2420313,0.68207 0.892995,1.171875 1.656901,1.171875 h 2.34375 c 0.763906,0 1.414831,-0.489805 1.656901,-1.171875 h 6.585286 C 21.73793,20.203125 22,19.941055 22,19.617187 V 5.5546875 C 22,5.2308203 21.73793,4.96875 21.414062,4.96875 h -0.585937 v 12.304687 c 0,0.969297 -0.827578,1.757813 -1.796875,1.757813 H 13.656901 C 13.41487,19.71332 12.763907,20.203125 12,20.203125 c -0.763906,0 -1.414831,-0.489805 -1.656901,-1.171875 H 4.96875 c -0.9692968,0 -1.796875,-0.788516 -1.796875,-1.757813 V 4.96875 Z"/></svg>`,
-						resourceUrl: "https://mwittrien.github.io/BetterDiscordAddons/Library/_res",
-						websiteUrl: "https://github.com/mwittrien/BetterDiscordAddons/tree/master/Library",
-						sourceUrl: `https://mwittrien.github.io/BetterDiscordAddons/Library/0${fileName}.plugin.js`,
+						resourceUrl: "https://kokofixcomputers.github.io/BetterDiscordAddons/Library/_res",
+						websiteUrl: "https://github.com/kokofixcomputers/BetterDiscordAddons/tree/master/Library",
+						sourceUrl: `https://kokofixcomputers.github.io/BetterDiscordAddons/Library/0${fileName}.plugin.js`,
 						download: "?library"
 					});
 				}
@@ -591,8 +591,8 @@
 			{section: "General", renderSection: _ => [
 				createElement(`<div class="welcome-message">Welcome to my Plugins and Themes Repository</div>`),
 				createElement(`<div class="divider"></div>`),
-				createElement(`<div class="welcome-details">Here you'll find all my Plugins and Themes that are hosted on my <a href="https://github.com/mwittrien/BetterDiscordAddons/" target="_blank">GitHub</a>.</div>`),
-				createElement(`<div class="welcome-details">If you expierence any Issues or got some Improvement Suggestions for my stuff, then feel free to drop them on <a href="https://github.com/mwittrien/BetterDiscordAddons/issues" target="_blank">here</a>. But please make sure whether there is already an open Thread for your Issue or Suggestion.</div>`),
+				createElement(`<div class="welcome-details">Here you'll find all my Plugins and Themes that are hosted on my <a href="https://github.com/kokofixcomputers/BetterDiscordAddons/" target="_blank">GitHub</a>.</div>`),
+				createElement(`<div class="welcome-details">If you expierence any Issues or got some Improvement Suggestions for my stuff, then feel free to drop them on <a href="https://github.com/kokofixcomputers/BetterDiscordAddons/issues" target="_blank">here</a>. But please make sure whether there is already an open Thread for your Issue or Suggestion.</div>`),
 				createElement(`<div class="divider"></div>`),
 				createElement(`<div class="welcome-details">If you enjoy using my Stuff and want to support me feel free to donate to me or become a Patron and receive certain benefits depending on which Tier you choose.</div>`),
 				createElement(`<div class="donations"><a class="donation" href="https://www.paypal.me/MircoWittrien" target="_blank"><div class="donation-icon"><svg name="PayPal" width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="M 5.6863929,0 C 5.1806043,0 4.7507198,0.3656279 4.6704813,0.85995389 L 1.6795909,19.673995 c -0.058746,0.371103 0.2309887,0.706911 0.6092555,0.706911 h 4.4338638 l 1.1121097,-7.006437 -0.033522,0.22009 c 0.078805,-0.494326 0.5072079,-0.859954 1.0129965,-0.859954 h 2.1061586 c 4.139443,0 7.378419,-1.667588 8.325519,-6.4919233 0.02866,-0.1432829 0.07434,-0.4183163 0.07434,-0.4183163 C 19.589638,4.0390606 19.318112,2.8290903 18.345211,1.7301106 17.276361,0.5193702 15.342278,0 12.867737,0 Z M 21.516831,7.8139196 c -1.028771,4.7498274 -4.3124,7.2629664 -9.522166,7.2629664 H 10.107139 L 8.6962314,24 H 11.76 c 0.442744,0 0.820329,-0.319405 0.889104,-0.753552 l 0.03498,-0.189482 0.705454,-4.428033 0.04519,-0.244868 c 0.06878,-0.434148 0.446338,-0.753554 0.887649,-0.753554 h 0.559699 c 3.620757,0 6.455196,-1.457472 7.283371,-5.677153 0.332416,-1.693603 0.172401,-3.113533 -0.64861,-4.1394384 z"/></svg></div><div class="donation-link">PayPal</div></a><a class="donation" href="https://www.patreon.com/MircoWittrien" target="_blank"><div class="donation-icon"><svg name="Patreon" width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" d="M 0,-1.2209e-4 V 24 H 4.4021963 V -1.2209e-4 Z m 15.010145,0 c -4.974287,0 -9.020427,4.04121619 -9.020427,9.00819799 0,4.9565461 4.04614,8.9837411 9.020427,8.9837421 C 19.970866,17.991818 24,13.959406 24,9.0080759 24,4.0421376 19.969822,-1.2209e-4 15.010145,-1.2209e-4 Z"/></svg></div><div class="donation-link">Patreon</div></a></div>`),
@@ -606,10 +606,10 @@
 			{section: "Themes", renderSection: _ => createAddonList("Themes", ".theme.css")},
 			{section: "Separator"},
 			{section: "Invites", renderSection: _ => [
-				createInvite({invite: "Jx3TjNS", name: "DevilBro's Haus", details: "Support Server for all my Stuff", icon: "https://mwittrien.github.io/_res/imgs/db_logo.webp"}),
+				createInvite({invite: "Jx3TjNS", name: "DevilBro's Haus", details: "Support Server for all my Stuff", icon: "https://kokofixcomputers.github.io/_res/imgs/db_logo.webp"}),
 				createElement(`<div class="divider"></div>`),
-				createInvite({invite: "0Tmfo5ZbORCRqbAd", name: "BetterDiscord", details: "First Support Server for BD", icon: "https://mwittrien.github.io/_res/imgs/bd1_logo.webp"}),
-				createInvite({invite: "sbA3xCJ", name: "BetterDiscord2", details: "Second Support Server for BD", icon: "https://mwittrien.github.io/_res/imgs/bd2_logo.webp"})
+				createInvite({invite: "0Tmfo5ZbORCRqbAd", name: "BetterDiscord", details: "First Support Server for BD", icon: "https://kokofixcomputers.github.io/_res/imgs/bd1_logo.webp"}),
+				createInvite({invite: "sbA3xCJ", name: "BetterDiscord2", details: "Second Support Server for BD", icon: "https://kokofixcomputers.github.io/_res/imgs/bd2_logo.webp"})
 			]}
 		];
 		let items = [];
